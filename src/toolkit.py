@@ -125,7 +125,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
                 dm.moveto(416,282)
                 dm.leftclick()
                 sleep(.300)
-            else:#自动手动切换
+            elif dm.cmpColor(602,541,"b47d30-101010",1)==0:#自动手动切换
                 dm.moveto(intX,intY)
                 dm.leftclick()
                 sleep(.300)
@@ -154,9 +154,11 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             sleep(2.5)
             returnV = logVictoryLevel(dm,windowName)
 
-        dm.moveto(307, 121)
-        dm.leftclick()
-        sleep(.500)
+        if returnV!=0:
+            dm.moveto(307, 121)
+            dm.leftclick()
+            sleep(.500)
+
     intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
     if intX > 0 and intY > 0:
         if cf is not None:

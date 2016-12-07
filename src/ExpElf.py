@@ -37,8 +37,8 @@ class ExpElf:
         dm = self.dm
 
         ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName)
-        if ret ==0:
-            self.gameOver = True
+        # if ret ==0:
+        #     self.gameOver = True
         if ret == 2:
             return 1
 

@@ -1,0 +1,64 @@
+diff --git a/src/ExpElf.py b/src/ExpElf.py
+index 93f372b..f5d8923 100644
+--- a/src/ExpElf.py
++++ b/src/ExpElf.py
+@@ -37,8 +37,8 @@ class ExpElf:
+         dm = self.dm
+ 
+         ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName)
+-        if ret ==0:
+-            self.gameOver = True
++        # if ret ==0:
++        #     self.gameOver = True
+         if ret == 2:
+             return 1
+ 
+diff --git a/src/ExpElf.pyc b/src/ExpElf.pyc
+index 7a261d3..218b5ea 100644
+Binary files a/src/ExpElf.pyc and b/src/ExpElf.pyc differ
+diff --git a/src/main.py b/src/main.py
+index d272d0e..84a9cf7 100644
+--- a/src/main.py
++++ b/src/main.py
+@@ -12,8 +12,8 @@ dm = reg()
+ def main():
+     global dm
+     # cf = ExpElf.ExpElf(dm,"jiangshi",4,0,isRush = False)
+-    cf = ExpElf.ExpElf(dm,"dahao",11,10,isRush = False,isDelayRush = False,shenLe = True)
+-    # cf = ExpElf.ExpElf(dm,"xiaohao",11,10,isRush = False,isDelayRush = False,shenLe = True)
++    # cf = ExpElf.ExpElf(dm,"dahao",11,10,isRush = True,isDelayRush = False,shenLe = True)
++    cf = ExpElf.ExpElf(dm,"xiaohao",11,10,isRush = False,isDelayRush = False,shenLe = True)
+     cf.runUp()
+ 
+ 
+diff --git a/src/toolkit.py b/src/toolkit.py
+index eb8b919..a279d38 100644
+--- a/src/toolkit.py
++++ b/src/toolkit.py
+@@ -125,7 +125,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
+                 dm.moveto(416,282)
+                 dm.leftclick()
+                 sleep(.300)
+-            else:#自动手动切换
++            elif dm.cmpColor(602,541,"b47d30-101010",1)==0:#自动手动切换
+                 dm.moveto(intX,intY)
+                 dm.leftclick()
+                 sleep(.300)
+@@ -154,9 +154,11 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
+             sleep(2.5)
+             returnV = logVictoryLevel(dm,windowName)
+ 
+-        dm.moveto(307, 121)
+-        dm.leftclick()
+-        sleep(.500)
++        if returnV!=0:
++            dm.moveto(307, 121)
++            dm.leftclick()
++            sleep(.500)
++
+     intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
+     if intX > 0 and intY > 0:
+         if cf is not None:
+diff --git a/src/toolkit.pyc b/src/toolkit.pyc
+index 1bde804..fc915cb 100644
+Binary files a/src/toolkit.pyc and b/src/toolkit.pyc differ
