@@ -15,6 +15,8 @@ t_client = threading.Thread(target = client.send)
 t_client.start()
 
 def logVictoryLevel(dm,windowName="None"):
+    if windowName == "jiangshi":
+        return 1
     returnV = 1
     nowDict = dm.getNowDict()
     dm.useDict(0)
@@ -154,7 +156,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             sleep(2.5)
             returnV = logVictoryLevel(dm,windowName)
 
-        if returnV!=0:
+        if returnV!=0 or windowName == "jiangshi":
             dm.moveto(307, 121)
             dm.leftclick()
             sleep(.500)
