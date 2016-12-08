@@ -37,10 +37,16 @@ class ExpElf:
         dm = self.dm
 
         ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName)
-        # if ret ==0:
-        #     self.gameOver = True
-        if ret == 2:
+        if ret ==0:
+            self.fullRecogTimes +=1
+            if self.fullRecogTimes>4:
+                self.gameOver = True
             return 1
+        if ret == 2:
+            self.fullRecogTimes = 0
+            return 1
+
+        self.fullRecogTimes = 0
 
         intX,intY = FindPic(dm,223,525,320,601,u"C:/anjianScript/通用经验/起始页.bmp|C:/anjianScript/通用经验/起始页1.bmp","000000",0.9,0)
         if intX > 0 and intY > 0:
@@ -120,6 +126,7 @@ class ExpElf:
                     sleep(.100)
                     continue
             else:
+                print 'no bi shou'
                 sleep(.100)
                 continue
             # expString = dm.FindStr(0, 102, 802, 554, "经验怪2|经验怪1", "e0d0a6-101010|6b1911-101010", 0.6,intX,intY)
