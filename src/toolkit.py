@@ -64,7 +64,7 @@ def moveWindowAndBind(dm,windowName):
     if ret ==1:
         print 'bind OK'
 
-    dm.MoveWindow(hwnd, -2 , -38)
+    # dm.MoveWindow(hwnd, -2 , -38)
     # ret = dm.MoveWindow(hwnd, -2 , -38)
 
     setDict(dm)

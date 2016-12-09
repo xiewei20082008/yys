@@ -189,6 +189,7 @@ class ExpElf:
         while not self.gameOver:
             self.main()
             sleep(1)
+        self.dm.UnBindWindow()
 
 def calDistance(a,b,c,d):
     return (abs(c-a)**2 + abs(d-b)**2)**0.5
