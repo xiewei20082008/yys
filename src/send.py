@@ -1,6 +1,8 @@
-
 from time import sleep
-from toolkit import *
 
 
-send("aaa")
+try:
+    while True:
+        sleep(2)
+except:
+    print 'find'

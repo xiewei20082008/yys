@@ -24,5 +24,5 @@ class Client:
         self.udpCliSock.close()
 
 client = Client()
-client.send('delLog')
-# client.send('readLog')
+# client.send('delLog')
+client.send('readLog')

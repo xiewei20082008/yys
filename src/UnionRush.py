@@ -47,7 +47,7 @@ class UnionRush:
     def runUp(self):
         while True:
             if time.time() - self.lastTime >90:
-                ret = exitRush()
+                ret = self.exitRush()
                 if ret:
                     return True
             ret = self.main()

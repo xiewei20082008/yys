@@ -69,7 +69,7 @@ class Manager():
                 hwndGame = dm.EnumWindow(hwnd,"kaopu","",1+16)
                 print hwndGame
                 if hwndGame.isdigit()  and hwndGame>0:
-                    ret = dm.BindWindow(hwndGame, "dx.graphic.opengl.esv2", "windows", "normal", 0)
+                    ret = dm.BindWindow(hwndGame, "dx2", "windows", "normal", 0)
                     if ret ==1:
                         print 'bind OK'
                         setDict(dm)
@@ -79,16 +79,53 @@ class Manager():
             return False
     # dm.MoveWindow(hwnd, -2 , -38)
     # ret = dm.MoveWindow(hwnd, -2 , -38)
-    def tryInit(self,windowName):
+    def test(self,windowName):
         dm = 0
         if windowName== "dahao":
             dm = self.dm_dahao
         elif windowName== "xiaohao":
             dm = self.dm_xiaohao
-        dm.moveto(728,235)
-        sleep(.500)
-        dm.wheelup()
-        sleep(.500)
+        dm.setPath(u"c:/anjianScript/通用经验")
+        print 'start find'
+        chapter =5
+        dm_ret = dm.Capture(0,0,800,600,"d:/screen.bmp")
+        print dm_ret
+        intX,intY = FindPic(dm,537,53,635,157,u"阴阳师图标.bmp","202020",0.8,0)
+        print intX,intY
+        print 'find end'
+        # if intX>0:
+            # print 'found'
+            # dm.moveto(intX,intY)
+            # dm.leftClick()
+            # sleep(.500)
+
+    def tryInit(self,windowName,chapter):
+        dm = 0
+        if windowName== "dahao":
+            dm = self.dm_dahao
+        elif windowName== "xiaohao":
+            dm = self.dm_xiaohao
+        dm.setPath(u"c:/anjianScript/通用经验")
+        for i in range(0,15):
+
+
+            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","606060",0.7,0)
+            if intX>0:
+                print 'find'
+                dm.moveto(intX,intY)
+                dm.leftClick()
+                sleep(.500)
+                return True
+
+            else:
+                dm.moveto(728,235)
+                sleep(.500)
+                dm.wheelup()
+                sleep(.500)
+
+            sleep(2.5)
+        else:
+            return False    
 
     def tryEnterGame(self,windowName):
         dm = 0
@@ -99,7 +136,7 @@ class Manager():
         dm.setPath(u"c:/anjianScript/通用经验")
         print 'in enter game'
         for i in range(0,40):
-            intX,intY = FindPic(dm,537,53,635,157,u"阴阳师图标.bmp","050505",0.8,0)
+            intX,intY = FindPic(dm,537,53,635,157,u"阴阳师图标.bmp","202020",0.8,0)
             if intX>0:
                 print 'find icon'
                 dm.moveto(intX,intY)
@@ -136,11 +173,17 @@ class Manager():
 
 m = Manager()
 m.bindWindow()
-windowName = "dahao"
-m.restart(windowName)
-ret = m.tryBind(windowName)
-ret = m.tryEnterGame(windowName)
-ret = m.tryInit(windowName)
-print ret
-
-m.close()
+try:
+    windowName = "xiaohao"
+    m.restart(windowName)
+    ret = m.tryBind(windowName)
+    ret = m.tryEnterGame(windowName)
+    ret = m.tryInit(windowName,5)
+    # ret = m.test(windowName)
+    print ret
+    m.close()
+except Exception as e:
+    print 'except here'
+    print e
+    print e.args
+    m.close()

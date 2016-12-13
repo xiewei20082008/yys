@@ -60,7 +60,7 @@ def moveWindowAndBind(dm,windowName):
     hwnd = dm.FindWindow("",windowName)
     hwndGame = dm.EnumWindow(hwnd,"kaopu","",1+16)
     print hwndGame
-    ret = dm.BindWindow(hwndGame, "dx.graphic.opengl.esv2", "windows", "normal", 0)
+    ret = dm.BindWindow(hwndGame, "dx2", "windows", "normal", 0)
     if ret ==1:
         print 'bind OK'
 
