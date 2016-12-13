@@ -12,30 +12,47 @@ class UnionRush:
         self.acceptLevel = 25
         self.nowUnion = 0
         self.lastTime = time.time()
+    def exitRush(self):
+        dm = self.dm
+        for i in range (0,30):
+            intX,intY = FindPic(dm,223,525,320,601,u"C:/anjianScript/通用经验/起始页.bmp|C:/anjianScript/通用经验/起始页1.bmp","000000",0.9,0)
+            if intX > 0 and intY > 0:
+                return True
+            intX,intY = FindPic(dm,300,50,460,150,u"C:/anjianScript/通用经验/顶部结界突破.bmp|C:/anjianScript/通用经验/顶部结界突破1.bmp","050505",0.8,0)
+            if intX > 0 and intY > 0:
+                dm.moveto(63,566)
+                dm.leftClick()
+                sleep(1.0)
+                continue
+            sleep(.500)
+        else:
+            return False
     def rushAllUnion(self):
         dm = self.dm
         if self.nowUnion>2:
-            return 0
+            ret = self.exitRush()
+            return ret
         i = self.unionPos[self.nowUnion]
         ret = dm.getcolor(i[0],i[1])
         if ret == "685a4f":
             dm.moveto(i[0],i[1])
             dm.leftClick()
-            sleep(1.500)
+            sleep(2.500)
             self.recogLevel()
             sleep(1)
-            return 1
+            return False
         else:
             self.nowUnion +=1
-            return 1
+            return False
     def runUp(self):
         while True:
             if time.time() - self.lastTime >90:
-                print 'union timeout'
-                break
+                ret = exitRush()
+                if ret:
+                    return True
             ret = self.main()
-            if ret == 0:
-                break
+            if ret :
+                return True
             sleep(1)
         return True
 
@@ -48,11 +65,12 @@ class UnionRush:
             sleep(.500)
         intX,intY = FindPic(dm,759,259,780,316,u"C:/anjianScript/公会突破/公会tabLight.bmp","000000",0.8,0)
         if intX>0:
+            sleep(1.0)
             ret = self.rushAllUnion()
             return ret
 
         autoBattle(dm,shenLe=True)
-        return 1
+        return False
     def testRecog(self):
         dm = self.dm
         v = dm.getNowDict()

@@ -59,9 +59,6 @@ class ExpElf:
                 ur = UnionRush(dm,self.windowName)
                 ur.runUp()
                 self.lastRushTime = time.time()
-                dm.moveto(63,566)
-                dm.leftClick()
-                sleep(.500)
                 print 'end rush'
                 return
             ret = dm.ocr(475,6,503,28,"e4ddca-505050", 0.7)

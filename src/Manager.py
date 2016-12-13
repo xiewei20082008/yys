@@ -109,18 +109,20 @@ class Manager():
 
             intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0)
             if intX>0:
+                sleep(5.0)
                 dm.moveto(431,103)
                 dm.leftClick()
                 sleep(7.0)
                 print 'enter game ok'
                 return True
 
-            print 'click once'
-            dm.moveto(397,441)
-            dm.leftclick()
-            sleep(.500)
+            if dm.cmpColor(730,20,"d6c7a5-0a0a0a",1) !=0:
+                print 'click once'
+                dm.moveto(397,441)
+                dm.leftclick()
+                sleep(.500)
 
-            sleep(3.0)
+            sleep(1.5)
         else:
             return False
 
