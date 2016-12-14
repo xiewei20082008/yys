@@ -123,9 +123,16 @@ class Manager():
                 dm.wheelup()
                 sleep(.500)
 
+            intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)
+            if intX > 0:
+                dm.moveto(659,163)
+                dm.leftClick()
+                sleep(.500)
+                return True
+
             sleep(2.5)
         else:
-            return False    
+            return False
 
     def tryEnterGame(self,windowName):
         dm = 0
@@ -171,19 +178,15 @@ class Manager():
         self.dm_xiaohao.unbindwindow()
         print 'end'
 
-m = Manager()
-m.bindWindow()
-try:
-    windowName = "xiaohao"
-    m.restart(windowName)
-    ret = m.tryBind(windowName)
-    ret = m.tryEnterGame(windowName)
-    ret = m.tryInit(windowName,5)
-    # ret = m.test(windowName)
-    print ret
-    m.close()
-except Exception as e:
-    print 'except here'
-    print e
-    print e.args
-    m.close()
+
+class Deamon:
+    def __init__(self):
+        self.m = Manager()
+        self.m.bindWindow()
+    def startWindow(self,windowName,chapter):
+        self.m.restart(windowName)
+        ret = self.m.tryBind(windowName)
+        ret = self.m.tryEnterGame(windowName)
+        ret = self.m.tryInit(windowName,chapter)
+    def close(self):
+        self.m.close()

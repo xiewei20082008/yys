@@ -2,7 +2,10 @@ from time import sleep
 
 
 try:
-    while True:
-        sleep(2)
-except:
+    a = 10/0
+except KeyboardInterrupt as e:
+    print e
     print 'find'
+except Exception as e:
+    print e
+    print 'other'

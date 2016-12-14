@@ -109,11 +109,19 @@ def send1(dm,message):
     dm.leftClick()
 def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "none"):
     returnV = 1
-    intX,intY = FindPic(dm,519,318,548,344,u"C:/anjianScript/阴阳师碎片/协助.bmp","000000", 0.6, 0)
-    if intX > 0 and intY > 0:
-        dm.moveto(intX, intY)
-        dm.leftclick()
-        sleep(.500)
+    intX,intY = FindPic(dm,500,300,570,370,u"C:/anjianScript/阴阳师碎片/协助.bmp","101010", 0.8, 0)
+    if intX > 0:
+        ensureX,ensureY = intX,intY
+        print 'find assist'
+        intX,intY = FindPic(dm,409,358,448,383,u"C:/anjianScript/通用经验/协助金币.bmp","202020", 0.75, 0)
+        if intX>0:
+            dm.moveto(529,391)
+            dm.leftClick()
+            sleep(.500)
+        else:
+            dm.moveto(ensureX, ensureY)
+            dm.leftclick()
+            sleep(.500)
     if shenLe:
         intX,intY = FindPic(dm,18,501,36,523,u"C:/anjianScript/通用经验/战斗指南针.bmp","000000",0.8,0)
         if intX>0:
@@ -128,7 +136,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             if zhaoyuX>0:
                 dm.moveto(zhaoyuX,zhaoyuY)
                 dm.leftclick()
-                sleep(.300)
+                sleep(.700)
                 dm.moveto(416,282)
                 dm.leftclick()
                 sleep(.300)

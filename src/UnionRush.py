@@ -93,7 +93,7 @@ class UnionRush:
             if l<=self.acceptLevel:
                 dm.moveto(i[0],i[1])
                 dm.leftClick()
-                sleep(.500)#到点攻击的地方
+                sleep(1.5)#到点攻击的地方
                 dm.moveR(130,80)
                 dm.leftclick()
                 sleep(.500)
