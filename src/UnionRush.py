@@ -126,7 +126,14 @@ class UnionRush:
                     dm.moveto(i[0],i[1])
                     dm.leftClick()
                     sleep(1.5)#到点攻击的地方
-                    dm.moveR(130,80)
+                    #here just log test
+                    f = open('d:/color.txt','a+')
+                    ret = dm.getcolor(i[0]+106,i[1]+82)
+                    print >>f,ret
+                    if dm.cmpColor(i[0]+106,i[1]+82,"f7b25a",0.8) !=0:
+                        break
+                    #
+                    dm.moveto(i[0]+106,i[1]+82)
                     dm.leftclick()
                     sleep(.500)
                     sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
@@ -134,6 +141,9 @@ class UnionRush:
                     sleep(.500)
                     break
             else:
+                if dm.CmpColor(646,450,"67615a",0.9) ==0:
+                    break
+                ret = dm.getcolor()
                 dm.moveto(450,300)
                 sleep(.300)
                 dm.wheeldown()

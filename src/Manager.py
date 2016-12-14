@@ -1,4 +1,5 @@
 #coding=utf8
+import threading
 from toolkit import *
 from time import sleep
 
@@ -178,6 +179,12 @@ class Manager():
         self.dm_xiaohao.unbindwindow()
         print 'end'
 
+class Script:
+    def __init__(self):
+        self.threadEntity = 0
+        self.dm = 0
+        self.lastActiveTime = 0
+        self.mutex = threading.Lock()
 
 class Deamon:
     def __init__(self):
