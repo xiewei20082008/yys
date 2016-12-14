@@ -7,7 +7,8 @@ class UnionRush:
     def __init__(self,dm,windowName):
         self.dm = dm
         self.windowName = windowName
-        self.levelPos = [(324,154),(324,228),(324,302),(324,376),(324,450),(527,154),(527,228),(527,303),(527,376),(527,451)]
+        self.levelPos = [(324,154),(324,228),(324,302),(324,376),(527,154),(527,228),(527,303),(527,376)]
+        # self.levelPos = [(324,154),(324,228),(324,302),(324,376),(324,450),(527,154),(527,228),(527,303),(527,376),(527,451)]
         self.unionPos = [(266,206),(266,315),(266,425)]
         self.acceptLevel = 25
         self.nowUnion = 0
@@ -55,7 +56,33 @@ class UnionRush:
                 return True
             sleep(1)
         return True
-
+    def findFirstY(self):
+        dm = self.dm
+        x = 503
+        y = 135
+        # 找到第一个白点区域
+        while y<300:
+            ret = dm.GetColor(x,y)
+            try:
+                if int(ret[4:],16)>=0xa0:
+                    break
+            except:
+                return 0
+            y+=1
+        else:
+            return 0
+        while y<300:
+            ret = dm.GetColor(x,y)
+            try:
+                if int(ret[4:],16)<0xa0:
+                    break
+            except:
+                return 0
+            y+=1
+        else:
+            return 0
+        print 'result is ' + str(y)
+        return y
     def main(self):
         dm = self.dm
         intX,intY = FindPic(dm,758,259,783,315,u"C:/anjianScript/公会突破/公会tab.bmp","000000",0.8,0)
@@ -75,9 +102,9 @@ class UnionRush:
         dm = self.dm
         v = dm.getNowDict()
         dm.useDict(2)
-        for i in self.levelPos:
-            s = dm.Ocr(i[0],i[1],i[0]+14,i[1]+11,"b@2b2118-606060",0.8)
-            print s
+        # s = dm.OcrExOne(324,124,324+14,480,"b@2b2118-606060",0.8)
+        s = dm.OcrExOne(527,124,527+14,480,"b@2b2118-606060",0.8)
+        print s
         dm.useDict(v)
 
     def recogLevel(self):
@@ -85,22 +112,44 @@ class UnionRush:
         # dm.Capture(0,0,500,400,"c:/screen.bmp")
         v = dm.getNowDict()
         dm.useDict(2)
-        for i in self.levelPos:
-            s = dm.Ocr(i[0],i[1],i[0]+14,i[1]+11,"b@2b2118-606060",0.8)
-            l = 100
-            if s.isdigit():
-                l = int(s)
-            if l<=self.acceptLevel:
-                dm.moveto(i[0],i[1])
-                dm.leftClick()
-                sleep(1.5)#到点攻击的地方
-                dm.moveR(130,80)
-                dm.leftclick()
-                sleep(.500)
-                sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
-                self.lastTime = time.time()
-                sleep(.500)
+        for i in range(0,5):
+            y = self.findFirstY()
+            if y == 0:
                 break
+            diff_y = y - 138
+            for i in self.levelPos:
+                s = dm.Ocr(i[0],diff_y+i[1],i[0]+14,diff_y+i[1]+11,"b@2b2118-606060",0.8)
+                l = 100
+                if s.isdigit():
+                    l = int(s)
+                if l<=self.acceptLevel:
+                    dm.moveto(i[0],i[1])
+                    dm.leftClick()
+                    sleep(1.5)#到点攻击的地方
+                    dm.moveR(130,80)
+                    dm.leftclick()
+                    sleep(.500)
+                    sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
+                    self.lastTime = time.time()
+                    sleep(.500)
+                    break
+            else:
+                dm.moveto(450,300)
+                sleep(.300)
+                dm.wheeldown()
+                sleep(3.0)
+                continue
+            break
         self.nowUnion +=1
         self.lastTime = time.time()
         dm.useDict(v)
+
+if __name__ == "__main__":
+    dm = reg()
+    try:
+        moveWindowAndBind(dm,"dahao")
+        ur = UnionRush(dm,"dahao")
+        ur.findFirstY()
+        # ur.testRecog()
+    except:
+        dm.unbindwindow()
