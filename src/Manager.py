@@ -1,5 +1,7 @@
 #coding=utf8
 import threading
+import ExpElf
+import time
 from toolkit import *
 from time import sleep
 
@@ -115,13 +117,25 @@ class Manager():
                 print 'find'
                 dm.moveto(intX,intY)
                 dm.leftClick()
-                sleep(.500)
-                return True
+                sleep(2.500)
 
             else:
-                dm.moveto(728,235)
+                dm.moveto(728,150)
                 sleep(.500)
-                dm.wheelup()
+
+                dm.leftdown()
+                sleep(1.000)
+                for i in range(0,3):
+                    dm.mover( 0, 50)
+                    sleep(.200)
+
+                sleep(1.000)
+                dm.leftup()
+                sleep(.300)
+                dm.leftup()
+                sleep(1.500)
+
+
                 sleep(.500)
 
             intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)
@@ -183,17 +197,60 @@ class Script:
     def __init__(self):
         self.threadEntity = 0
         self.dm = 0
-        self.lastActiveTime = 0
+        self.lastAliveTime = 0
         self.mutex = threading.Lock()
 
 class Deamon:
     def __init__(self):
         self.m = Manager()
         self.m.bindWindow()
+        self.xiaohaoScript = Script()
+        self.dahaoScript = Script()
     def startWindow(self,windowName,chapter):
         self.m.restart(windowName)
         ret = self.m.tryBind(windowName)
+        if not ret:
+            return ret
         ret = self.m.tryEnterGame(windowName)
+        if not ret:
+            return ret
         ret = self.m.tryInit(windowName,chapter)
+        if not ret:
+            return ret
+        return True
     def close(self):
         self.m.close()
+    def runUp(self):
+        while True:
+            fXiaohao = open('c:/anjianScript/xiaohao.txt','r')
+            command = fXiaohao.readline()
+            fXiaohao.close()
+            state,chapter,aimEnergy,isRush = command.split(' ')
+            print state,chapter,aimEnergy,isRush
+            if state=="1":
+                if self.xiaohaoScript.lastAliveTime ==0:
+                    # 运行到初始状态
+                    ret = self.startWindow("xiaohao",int(chapter))
+                    if ret:
+                        print u'窗口启动成功'
+                        self.xiaohaoScript.lastAliveTime = time.time()
+                    else:
+                        print u'窗口启动失败'
+                        continue
+                    cf = 0
+                    self.xiaohaoScript.dm = self.m.dm_xiaohao
+                    evalString = 'ExpElf.ExpElf(self.m.dm_xiaohao,"xiaohao",'+chapter+','+aimEnergy+',isRush = '+isRush+',script=self.xiaohaoScript)'
+                    print evalString
+                    cf = eval(evalString)
+                    t1 = threading.Thread(target = cf.runUp)
+                    self.xiaohaoScript.threadEntity = t1
+                    t1.start()
+                else:
+                    f = open('d:/lastAliveTimegap.txt','a')
+                    print >>f, time.time() - self.xiaohaoScript.lastAliveTime
+                    f.close()
+                break
+            sleep(10.0)
+
+d = Deamon()
+d.runUp()

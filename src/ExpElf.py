@@ -11,7 +11,7 @@ import time
 map2 = {5:(2,10),11:(2,10),4:(3,11),2:(3,11)}
 
 class ExpElf:
-    def __init__(self,dm,account,fb,aimEnergy,isRush = False,isDelayRush = False,shenLe = False):
+    def __init__(self,dm,account,fb,aimEnergy,isRush = False,isDelayRush = False,shenLe = True,script= None):
         self.dm = dm
         self.moved = False
         self.fb = fb
@@ -23,6 +23,8 @@ class ExpElf:
         self.shenLe = shenLe
         self.aimEnergy = aimEnergy
         self.isRush = isRush
+        self.script = script
+        self.nowEnergy = 0
 
         os.system('title '+'.'.join(account))
 
@@ -30,6 +32,12 @@ class ExpElf:
             self.lastRushTime = time.time()
         else:
             self.lastRushTime = 0
+    def setScriptAlive(self):
+        if self.script:
+            self.script.mutex.acquire()
+            self.script.lastAliveTime = time.time()
+            self.script.mutex.release()
+
     def resetFB(self):
         self.moved = False
         self.monsterNum = map2[self.fb][0]
@@ -63,11 +71,20 @@ class ExpElf:
                 return
             ret = dm.ocr(475,6,503,28,"e4ddca-505050", 0.7)
             print ret
-            if ret.isdigit() and int(ret)>self.aimEnergy:
-                print 'start fb'
-                dm.moveto(390, 305)
-                dm.leftclick()
-                sleep(.500)
+            # if ret.isdigit() and int(ret)>self.aimEnergy:
+            #     print 'start fb'
+            #     dm.moveto(390, 305)
+            #     dm.leftclick()
+            #     sleep(.500)
+            if ret.isdigit():
+                if int(ret) != self.nowEnergy:
+                    self.nowEnergy = int(ret)
+                    self.setScriptAlive()
+                if int(ret)>self.aimEnergy:
+                    print 'start fb'
+                    dm.moveto(390, 305)
+                    dm.leftclick()
+                    sleep(.500)
 
         intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)
         if intX > 0 and intY > 0:

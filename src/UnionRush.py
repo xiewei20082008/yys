@@ -118,22 +118,23 @@ class UnionRush:
                 break
             diff_y = y - 138
             for i in self.levelPos:
-                s = dm.Ocr(i[0],diff_y+i[1],i[0]+14,diff_y+i[1]+11,"b@2b2118-606060",0.8)
+                shift_y = diff_y+i[1]
+                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"b@2b2118-606060",0.8)
                 l = 100
                 if s.isdigit():
                     l = int(s)
                 if l<=self.acceptLevel:
-                    dm.moveto(i[0],i[1])
+                    dm.moveto(i[0],shift_y)
                     dm.leftClick()
                     sleep(1.5)#到点攻击的地方
                     #here just log test
                     f = open('d:/color.txt','a+')
-                    ret = dm.getcolor(i[0]+106,i[1]+82)
+                    ret = dm.getcolor(i[0]+106,shift_y+82)
                     print >>f,ret
-                    if dm.cmpColor(i[0]+106,i[1]+82,"f7b25a",0.8) !=0:
+                    if dm.cmpColor(i[0]+106,shift_y+82,"f7b25a",0.8) !=0:
                         break
                     #
-                    dm.moveto(i[0]+106,i[1]+82)
+                    dm.moveto(i[0]+106,shift_y+82)
                     dm.leftclick()
                     sleep(.500)
                     sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
@@ -143,7 +144,6 @@ class UnionRush:
             else:
                 if dm.CmpColor(646,450,"67615a",0.9) ==0:
                     break
-                ret = dm.getcolor()
                 dm.moveto(450,300)
                 sleep(.300)
                 dm.wheeldown()
