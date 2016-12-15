@@ -199,6 +199,7 @@ class Script:
         self.dm = 0
         self.lastAliveTime = 0
         self.mutex = threading.Lock()
+        self.elf = None
 
 class Deamon:
     def __init__(self):
@@ -227,7 +228,10 @@ class Deamon:
             commandFile.close()
             state,chapter,aimEnergy,isRush = command.split(' ')
             print state,chapter,aimEnergy,isRush
-            if state=="1":
+            if state == "0":
+                if script.lastAliveTime is not 0 and script.elf is not None:
+                    script.elf.gameOver = True 
+            elif state=="1":
                 if script.lastAliveTime ==0:
                     # 运行到初始状态
                     ret = self.startWindow(windowName,int(chapter))
@@ -237,12 +241,13 @@ class Deamon:
                     else:
                         print u'窗口启动失败'
                         return False
-                    cf = 0
+                    elf = 0
                     script.dm = dm
                     evalString = 'ExpElf.ExpElf(self.m.dm_'+windowName+',"'+windowName+'",'+chapter+','+aimEnergy+',isRush = '+isRush+',script=script)'
                     print evalString
-                    cf = eval(evalString)
-                    t1 = threading.Thread(target = cf.runUp)
+                    elf = eval(evalString)
+                    script.elf = elf
+                    t1 = threading.Thread(target = elf.runUp)
                     script.threadEntity = t1
                     t1.start()
                     return True

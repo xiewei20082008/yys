@@ -41,13 +41,33 @@ class ExpElf:
     def resetFB(self):
         self.moved = False
         self.monsterNum = map2[self.fb][0]
+
     def main(self):
+        def stopConf(windowName):
+            try:
+                f = open('c:/anjianScript/'+windowName+'.txt','r')
+                s = f.readline()
+                print s
+                state,chapter,aimEnergy,isRush = s.split(' ')
+                state = "0"
+                ss = ' '.join([state,chapter,aimEnergy,isRush])
+                f.close()
+                f = open('c:/anjianScript/'+windowName+'.txt','w+')
+                f.write(ss)
+                f.close()
+                print 'end'
+                return True
+            except Exception as e:
+                print e
+                return False
+
         dm = self.dm
 
         ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName)
         if ret ==0:
             self.fullRecogTimes +=1
             if self.fullRecogTimes>4:
+                stopConf(self.windowName)
                 self.gameOver = True
             return 1
         if ret == 2:
@@ -203,7 +223,7 @@ class ExpElf:
         while not self.gameOver:
             self.main()
             sleep(1)
-        self.dm.UnBindWindow()
+        print 'elf thread end!'    
 
 def calDistance(a,b,c,d):
     return (abs(c-a)**2 + abs(d-b)**2)**0.5
@@ -222,12 +242,3 @@ def moveScreen(dm,movePara):
     dm.leftup()
     dm.leftup()
     sleep(.500)
-
-
-
-
-
-# init()
-# while not gameOver:
-#     main()
-#     sleep(1)
