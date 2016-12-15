@@ -221,35 +221,43 @@ class Deamon:
     def close(self):
         self.m.close()
     def runUp(self):
-        while True:
-            fXiaohao = open('c:/anjianScript/xiaohao.txt','r')
-            command = fXiaohao.readline()
-            fXiaohao.close()
+        def openWindowAndRun(windowName,script,dm):
+            commandFile = open('c:/anjianScript/'+windowName+'.txt','r')
+            command = commandFile.readline()
+            commandFile.close()
             state,chapter,aimEnergy,isRush = command.split(' ')
             print state,chapter,aimEnergy,isRush
             if state=="1":
-                if self.xiaohaoScript.lastAliveTime ==0:
+                if script.lastAliveTime ==0:
                     # 运行到初始状态
-                    ret = self.startWindow("xiaohao",int(chapter))
+                    ret = self.startWindow(windowName,int(chapter))
                     if ret:
                         print u'窗口启动成功'
-                        self.xiaohaoScript.lastAliveTime = time.time()
+                        script.lastAliveTime = time.time()
                     else:
                         print u'窗口启动失败'
-                        continue
+                        return False
                     cf = 0
-                    self.xiaohaoScript.dm = self.m.dm_xiaohao
-                    evalString = 'ExpElf.ExpElf(self.m.dm_xiaohao,"xiaohao",'+chapter+','+aimEnergy+',isRush = '+isRush+',script=self.xiaohaoScript)'
+                    script.dm = dm
+                    evalString = 'ExpElf.ExpElf(self.m.dm_'+windowName+',"'+windowName+'",'+chapter+','+aimEnergy+',isRush = '+isRush+',script=script)'
                     print evalString
                     cf = eval(evalString)
                     t1 = threading.Thread(target = cf.runUp)
-                    self.xiaohaoScript.threadEntity = t1
+                    script.threadEntity = t1
                     t1.start()
+                    return True
                 else:
                     f = open('d:/lastAliveTimegap.txt','a')
-                    print >>f, time.time() - self.xiaohaoScript.lastAliveTime
+                    print >>f, time.time() - script.lastAliveTime
                     f.close()
-                break
+                    return True
+        while True:
+            ret = openWindowAndRun("xiaohao",self.xiaohaoScript,self.m.dm_xiaohao)
+            if not ret:
+                continue
+            # ret = openWindowAndRun("dahao",self.dahaoScript,self.m.dm_dahao)
+            # if not ret:
+            #     continue
             sleep(10.0)
 
 d = Deamon()
