@@ -238,7 +238,7 @@ class Deamon:
                     sendToServer(windowName+" has stopped.(full)")
                 return True
             elif state=="1":
-                if script.lastAliveTime ==0 or time.time() - script.lastAliveTime > 20*60:
+                if script.lastAliveTime ==0 or time.time() - script.lastAliveTime > 9*60:
                     # 运行到初始状态
                     ret = self.startWindow(windowName,int(chapter))
                     if ret:

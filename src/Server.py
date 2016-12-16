@@ -21,7 +21,7 @@ class Server:
             self.udpSerSock.sendto(ret.read(),addr)
         elif message.startswith('sendCmd:'):
             txt = message.split(':')
-            if len(txt)>1:
+            if len(txt)>1 and txt[1] not in self.command.values():
                 txt = txt[1]
                 nowTime = str(time.time())
                 self.command[nowTime] = txt

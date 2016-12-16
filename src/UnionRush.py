@@ -103,7 +103,7 @@ class UnionRush:
         v = dm.getNowDict()
         dm.useDict(2)
         # s = dm.OcrExOne(324,124,324+14,480,"b@2b2118-606060",0.8)
-        s = dm.OcrExOne(527,124,527+14,480,"b@2b2118-606060",0.8)
+        s = dm.OcrExOne(527,124,527+14,480,"b@2b2118-404040",0.7)
         print s
         dm.useDict(v)
 
@@ -119,7 +119,8 @@ class UnionRush:
             diff_y = y - 138
             for i in self.levelPos:
                 shift_y = diff_y+i[1]
-                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"b@2b2118-606060",0.8)
+                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.8)
+                dm_ret = dm.Capture(i[0],shift_y,i[0]+14,shift_y+11,"f:/pic/"+s+"."+str(time.time())+".bmp")
                 l = 100
                 if s.isdigit():
                     l = int(s)
