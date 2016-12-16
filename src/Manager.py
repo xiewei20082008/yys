@@ -4,6 +4,8 @@ import ExpElf
 import time
 from toolkit import *
 from time import sleep
+import Client
+from pymouse import PyMouse
 
 class Manager():
     def __init__(self):
@@ -33,8 +35,9 @@ class Manager():
                 print 'find qidong'
                 dm.moveto(intX,intY)
                 dm.leftclick()
-                sleep(.500)
-                dm.moveto(0,0)
+                sleep(1.000)
+                mouse = PyMouse()
+                mouse.move(1,1)
                 sleep(1.500)
                 break
             intX,intY = FindPic(dm,x,y,x+90,y+50,u"关闭.bmp","050505",0.8,0)
@@ -112,7 +115,7 @@ class Manager():
         for i in range(0,15):
 
 
-            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","606060",0.7,0)
+            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","606060",0.9,0)
             if intX>0:
                 print 'find'
                 dm.moveto(intX,intY)
@@ -230,9 +233,12 @@ class Deamon:
             print state,chapter,aimEnergy,isRush
             if state == "0":
                 if script.lastAliveTime is not 0 and script.elf is not None:
-                    script.elf.gameOver = True 
+                    script.elf.gameOver = True
+                    script.lastAliveTime = 0
+                    sendToServer(windowName+" has stopped.(full)")
+                return True
             elif state=="1":
-                if script.lastAliveTime ==0:
+                if script.lastAliveTime ==0 or time.time() - script.lastAliveTime > 20*60:
                     # 运行到初始状态
                     ret = self.startWindow(windowName,int(chapter))
                     if ret:
@@ -256,13 +262,18 @@ class Deamon:
                     print >>f, time.time() - script.lastAliveTime
                     f.close()
                     return True
+
+
+        client = Client.Client()
+        thread_client = threading.Thread(target = client.sendHeartbeat)
+        thread_client.start()
         while True:
             ret = openWindowAndRun("xiaohao",self.xiaohaoScript,self.m.dm_xiaohao)
             if not ret:
                 continue
-            # ret = openWindowAndRun("dahao",self.dahaoScript,self.m.dm_dahao)
-            # if not ret:
-            #     continue
+            ret = openWindowAndRun("dahao",self.dahaoScript,self.m.dm_dahao)
+            if not ret:
+                continue
             sleep(10.0)
 
 d = Deamon()

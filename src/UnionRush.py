@@ -131,7 +131,8 @@ class UnionRush:
                     f = open('d:/color.txt','a+')
                     ret = dm.getcolor(i[0]+106,shift_y+82)
                     print >>f,ret
-                    if dm.cmpColor(i[0]+106,shift_y+82,"f7b25a",0.8) !=0:
+                    if dm.cmpColor(i[0]+106,shift_y+82,"f7b25a",1) !=0:
+                        print 'exit for attack cd'
                         break
                     #
                     dm.moveto(i[0]+106,shift_y+82)

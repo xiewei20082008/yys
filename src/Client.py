@@ -14,6 +14,30 @@ class Client:
         self.addr = (self.host,self.port)
         print 'socket ok'
         self.udpCliSock.settimeout(10)
+    def sendHeartbeat(self):
+        self.udpCliSock.settimeout(5)
+        received = ''
+        while True:
+            nowtime = str(time.time())
+            message = '~'.join([nowtime,'heartbeat',received])
+            self.udpCliSock.sendto(message,self.addr)
+            try:
+                data,tmp = self.udpCliSock.recvfrom(self.bufsize)
+                datas = data.split('~')
+                if len(datas)==3 and datas[0]==nowtime:
+                    received = datas[1]
+                    info = datas[2]
+                    infos = info.split(' ')
+                    if(len(infos)==5):
+                        f = open('c:/anjianScript/'+infos[0]+'.txt','w')
+                        f.write(' '.join(infos[1:]))
+                        f.close()
+                print 'OK'
+
+            except:
+                print 'receive time out'
+                continue
+            sleep(5)
     def send(self):
         while True:
             s = self.q.get()
@@ -37,3 +61,7 @@ class Client:
 
     def close(self):
         self.udpCliSock.close()
+
+if __name__=="__main__":
+    client = Client()
+    client.sendHeartbeat()

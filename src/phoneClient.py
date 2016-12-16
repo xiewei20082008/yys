@@ -25,4 +25,5 @@ class Client:
 
 client = Client()
 # client.send('delLog')
-client.send('readLog')
+# client.send('readLog')
+client.send('sendCmd:dahao 1 11 20 True')
