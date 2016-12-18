@@ -10,7 +10,7 @@ class UnionRush:
         self.levelPos = [(324,154),(324,228),(324,302),(324,376),(527,154),(527,228),(527,303),(527,376)]
         # self.levelPos = [(324,154),(324,228),(324,302),(324,376),(324,450),(527,154),(527,228),(527,303),(527,376),(527,451)]
         self.unionPos = [(266,206),(266,315),(266,425)]
-        self.acceptLevel = 25
+        self.acceptLevel = 29
         self.nowUnion = 0
         self.lastTime = time.time()
     def exitRush(self):
@@ -39,7 +39,8 @@ class UnionRush:
             dm.moveto(i[0],i[1])
             dm.leftClick()
             sleep(2.500)
-            self.recogLevel()
+            ret = self.recogLevel()
+            self.nowUnion +=1
             sleep(1)
             return False
         else:
@@ -109,17 +110,22 @@ class UnionRush:
 
     def recogLevel(self):
         dm = self.dm
+        def returnCall():
+            self.lastTime = time.time()
+            dm.useDict(v)
+
         # dm.Capture(0,0,500,400,"c:/screen.bmp")
         v = dm.getNowDict()
         dm.useDict(2)
         for i in range(0,5):
             y = self.findFirstY()
             if y == 0:
-                break
+                returnCall()
+                return
             diff_y = y - 138
             for i in self.levelPos:
                 shift_y = diff_y+i[1]
-                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.8)
+                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.95)
                 dm_ret = dm.Capture(i[0],shift_y,i[0]+14,shift_y+11,"f:/pic/"+s+"."+str(time.time())+".bmp")
                 l = 100
                 if s.isdigit():
@@ -132,9 +138,14 @@ class UnionRush:
                     f = open('d:/color.txt','a+')
                     ret = dm.getcolor(i[0]+106,shift_y+82)
                     print >>f,ret
+                    #攻击不能点
                     if dm.cmpColor(i[0]+106,shift_y+82,"f7b25a",1) !=0:
                         print 'exit for attack cd'
-                        break
+                        dm.moveto(35,550)
+                        dm.leftClick()
+                        sleep(.500)
+                        returnCall()
+                        return
                     #
                     dm.moveto(i[0]+106,shift_y+82)
                     dm.leftclick()
@@ -142,19 +153,16 @@ class UnionRush:
                     sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
                     self.lastTime = time.time()
                     sleep(.500)
-                    break
+                    returnCall()
+                    return
             else:
                 if dm.CmpColor(646,450,"67615a",0.9) ==0:
-                    break
+                    returnCall()
+                    return
                 dm.moveto(450,300)
                 sleep(.300)
                 dm.wheeldown()
                 sleep(3.0)
-                continue
-            break
-        self.nowUnion +=1
-        self.lastTime = time.time()
-        dm.useDict(v)
 
 if __name__ == "__main__":
     dm = reg()

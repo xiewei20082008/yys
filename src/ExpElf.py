@@ -8,7 +8,7 @@ import sys
 import time
 
 
-map2 = {5:(2,10),11:(2,10),4:(3,11),2:(3,11)}
+map2 = {5:(2,10),11:(2,10),4:(3,11),2:(3,11),10:(2,5)}
 
 class ExpElf:
     def __init__(self,dm,account,fb,aimEnergy,isRush = False,isDelayRush = False,shenLe = True,script= None):
@@ -223,7 +223,7 @@ class ExpElf:
         while not self.gameOver:
             self.main()
             sleep(1)
-        print 'elf thread end!'    
+        print 'elf thread end!'
 
 def calDistance(a,b,c,d):
     return (abs(c-a)**2 + abs(d-b)**2)**0.5

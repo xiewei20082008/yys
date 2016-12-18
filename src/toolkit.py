@@ -162,6 +162,13 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
         dm.moveto(724,500)
         dm.leftclick()
         sleep(.500)
+
+    intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/失败鼓.bmp","000000",0.8,0)
+    if intX>0:
+        dm.moveto(intX,intY)
+        dm.leftclick()
+        sleep(.500)
+
     intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
     if intX > 0 and intY > 0:
 

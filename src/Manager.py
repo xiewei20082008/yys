@@ -168,6 +168,17 @@ class Manager():
                 dm.leftclick()
                 sleep(.500)
 
+            intX,intY = FindPic(dm,444,318,509,361,u"更新确定.bmp","050505",0.8,0)
+            if intX>0:
+                dm.moveto(intX,intY)
+                dm.leftclick()
+                sleep(.500)
+
+            intX,intY = FindPic(dm,646,170,688,209,u"更新叉.bmp","050505",0.8,0)
+            if intX>0:
+                dm.moveto(intX,intY)
+                dm.leftclick()
+                sleep(.500)
 
             intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0)
             if intX>0:
@@ -238,7 +249,7 @@ class Deamon:
                     sendToServer(windowName+" has stopped.(full)")
                 return True
             elif state=="1":
-                if script.lastAliveTime ==0 or time.time() - script.lastAliveTime > 9*60:
+                if script.lastAliveTime ==0 or time.time() - script.lastAliveTime > 11*60:
                     # 运行到初始状态
                     ret = self.startWindow(windowName,int(chapter))
                     if ret:
