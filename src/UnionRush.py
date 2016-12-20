@@ -125,7 +125,7 @@ class UnionRush:
             diff_y = y - 138
             for i in self.levelPos:
                 shift_y = diff_y+i[1]
-                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.95)
+                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.85)
                 dm_ret = dm.Capture(i[0],shift_y,i[0]+14,shift_y+11,"f:/pic/"+s+"."+str(time.time())+".bmp")
                 l = 100
                 if s.isdigit():

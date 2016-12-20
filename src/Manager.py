@@ -222,6 +222,7 @@ class Deamon:
         self.xiaohaoScript = Script()
         self.dahaoScript = Script()
     def startWindow(self,windowName,chapter):
+        sendToServer(windowName+' try to enter game')
         self.m.restart(windowName)
         ret = self.m.tryBind(windowName)
         if not ret:
@@ -232,11 +233,26 @@ class Deamon:
         ret = self.m.tryInit(windowName,chapter)
         if not ret:
             return ret
+        sendToServer(windowName+' enter game successfully')
         return True
     def close(self):
         self.m.close()
     def runUp(self):
+
         def openWindowAndRun(windowName,script,dm):
+            def isScriptNeedRestart():
+                if script.elf is not None and script.elf.gameOver is True:
+                    sendToServer(windowsName+': restart for gameOver')
+                    return True
+                if script.lastAliveTime ==0:
+                    sendToServer(windowsName+': restart for lastAliveTime is zero')
+                    return True
+                if time.time() - script.lastAliveTime > 11*60:
+                    sendToServer(windowsName+': restart for script timeout')
+                    return True
+                return False
+
+
             commandFile = open('c:/anjianScript/'+windowName+'.txt','r')
             command = commandFile.readline()
             commandFile.close()
@@ -249,7 +265,7 @@ class Deamon:
                     sendToServer(windowName+" has stopped.(full)")
                 return True
             elif state=="1":
-                if script.lastAliveTime ==0 or time.time() - script.lastAliveTime > 11*60:
+                if isScriptNeedRestart():
                     # 运行到初始状态
                     ret = self.startWindow(windowName,int(chapter))
                     if ret:
