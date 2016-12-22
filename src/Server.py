@@ -15,17 +15,22 @@ class Server:
         if message == "readLog":
             print 'command readLog'
             ret = os.popen('tail -n 40 /root/log.txt')
-            self.udpSerSock.sendto(ret.read(),addr)
+            returnMessage = ret.read()
+            for i in range(3):
+                self.udpSerSock.sendto(returnMessage,addr)
         elif message == "delLog":
             ret = os.popen('rm -f /root/log.txt')
-            self.udpSerSock.sendto(ret.read(),addr)
+            returnMessage = ret.read()
+            for i in range(3):
+                self.udpSerSock.sendto(returnMessage,addr)
         elif message.startswith('sendCmd:'):
             txt = message.split(':')
             if len(txt)>1 and txt[1] not in self.command.values():
                 txt = txt[1]
                 nowTime = str(time.time())
                 self.command[nowTime] = txt
-            self.udpSerSock.sendto('command received',addr)
+            for i in range(3):
+                self.udpSerSock.sendto('command received',addr)
 
     def open(self):
         def solveHeartbeat(message,addr):

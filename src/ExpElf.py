@@ -223,6 +223,7 @@ class ExpElf:
         while not self.gameOver:
             self.main()
             sleep(1)
+        sendToServer('elf thread end!')    
         print 'elf thread end!'
 
 def calDistance(a,b,c,d):

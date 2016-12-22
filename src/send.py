@@ -1,11 +1,12 @@
 from time import sleep
+import threading
 
 
-try:
-    a = 10/0
-except KeyboardInterrupt as e:
-    print e
-    print 'find'
-except Exception as e:
-    print e
-    print 'other'
+def tt():
+    while True:
+        print 'a'
+        sleep(1)
+
+t = threading.Thread(target = tt)
+t.start()
+sleep(2)

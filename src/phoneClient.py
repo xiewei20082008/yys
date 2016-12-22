@@ -56,16 +56,25 @@ class Client:
         self.udpCliSock = socket(AF_INET, SOCK_DGRAM)
         self.addr = (self.host,self.port)
         print 'socket ok'
-        self.udpCliSock.settimeout(2)
+        self.udpCliSock.settimeout(0.4)
+    def flushListen(self):
+        while True:
+            try:
+                PacketBytes = self.udpCliSock.recv(1024)
+            except:
+                break;
     def send(self,message):
         data = '1~'+message
-        self.udpCliSock.sendto(data,self.addr)
-        try:
-            ret,tmp = self.udpCliSock.recvfrom(self.bufsize)
-            return ret
-        except:
+        for i in range(5):
+            self.udpCliSock.sendto(data,self.addr)
+            try:
+                ret,tmp = self.udpCliSock.recvfrom(self.bufsize)
+                self.flushListen()
+                return ret
+            except:
+                continue
+        else:
             return 'receive time out'
-
     def close(self):
         self.udpCliSock.close()
 
@@ -91,7 +100,7 @@ class phoneApp(App):
 
         if self.needConfirm:
             cmd = ' '.join([self.dd_hao.text,self.dd_start.text,self.dd_chapter.text,self.dd_aimEnergy.text,self.dd_rush.text])
-            self.l_log.text = 'confirm cmd\ncmd'
+            self.l_log.text = 'confirm cmd\n'+cmd
             self.needConfirm = False
         else:
             self.needConfirm = True
@@ -139,7 +148,7 @@ class phoneApp(App):
         self.dd_hao = genSpinner(['dahao','xiaohao'])
         self.dd_start = genSpinner(['0','1'])
         self.dd_chapter = genSpinner(['11','5'])
-        self.dd_aimEnergy = genSpinner(['20','30'])
+        self.dd_aimEnergy = genSpinner(['20','30','99'])
         self.dd_rush = genSpinner(['True','False'])
 
 

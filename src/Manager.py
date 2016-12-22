@@ -12,6 +12,9 @@ class Manager():
         self.dm_manager = reg()
         self.dm_dahao = reg()
         self.dm_xiaohao= reg()
+        self.dm_manager.SetShowErrorMsg(0)
+        self.dm_dahao.SetShowErrorMsg(0)
+        self.dm_xiaohao.SetShowErrorMsg(0)
         self.hwnd = 0
     def bindWindow(self):
         dm = self.dm_manager
@@ -46,7 +49,7 @@ class Manager():
                 dm.leftclick()
                 sleep(.500)
                 dm.moveto(0,0)
-                sleep(7.0)
+                sleep(4.0)
 
                 continue
             sleep(2.0)
@@ -69,12 +72,13 @@ class Manager():
             dm = self.dm_dahao
         elif windowName== "xiaohao":
             dm = self.dm_xiaohao
-        for i in range(0,10):
+        for i in range(0,20):
             hwnd = dm.FindWindow("",windowName)
             if hwnd>0:
                 hwndGame = dm.EnumWindow(hwnd,"kaopu","",1+16)
                 print hwndGame
                 if hwndGame.isdigit()  and hwndGame>0:
+                    dm.ForceUnBindWindow(hwndGame)
                     ret = dm.BindWindow(hwndGame, "dx2", "windows", "normal", 0)
                     if ret ==1:
                         print 'bind OK'
@@ -239,18 +243,30 @@ class Deamon:
         self.m.close()
     def runUp(self):
 
+        def resetScript(script):
+            if script.elf is not None:
+                script.elf.gameOver = True
+            script.mutex.acquire()
+            script.lastAliveTime = 0
+            script.mutex.release()
+            script.elf = None
+            return
         def openWindowAndRun(windowName,script,dm):
             def isScriptNeedRestart():
                 if script.elf is not None and script.elf.gameOver is True:
-                    sendToServer(windowsName+': restart for gameOver')
+                    resetScript(script)
+                    sendToServer(windowName+': restart for gameOver')
                     return True
-                if script.lastAliveTime ==0:
-                    sendToServer(windowsName+': restart for lastAliveTime is zero')
+                elif script.lastAliveTime ==0:
+                    sendToServer(windowName+': restart for lastAliveTime is zero')
                     return True
-                if time.time() - script.lastAliveTime > 11*60:
-                    sendToServer(windowsName+': restart for script timeout')
+                elif time.time() - script.lastAliveTime > 11*60:
+                    sendToServer(windowName+': restart for script timeout')
+                    dm.Capture(0,0,800,600,'f:/timeoutPic/'+str(time.time())+'.bmp')
+                    resetScript(script)
                     return True
-                return False
+                else:
+                    return False
 
 
             commandFile = open('c:/anjianScript/'+windowName+'.txt','r')
@@ -261,7 +277,9 @@ class Deamon:
             if state == "0":
                 if script.lastAliveTime is not 0 and script.elf is not None:
                     script.elf.gameOver = True
+                    script.mutex.acquire()
                     script.lastAliveTime = 0
+                    script.mutex.release()
                     sendToServer(windowName+" has stopped.(full)")
                 return True
             elif state=="1":
@@ -270,7 +288,9 @@ class Deamon:
                     ret = self.startWindow(windowName,int(chapter))
                     if ret:
                         print u'窗口启动成功'
+                        script.mutex.acquire()
                         script.lastAliveTime = time.time()
+                        script.mutex.release()
                     else:
                         print u'窗口启动失败'
                         return False
@@ -285,9 +305,9 @@ class Deamon:
                     t1.start()
                     return True
                 else:
-                    f = open('d:/lastAliveTimegap.txt','a')
-                    print >>f, time.time() - script.lastAliveTime
-                    f.close()
+                    # f = open('d:/lastAliveTimegap.txt','a')
+                    # print >>f, time.time() - script.lastAliveTime
+                    # f.close()
                     return True
 
 
