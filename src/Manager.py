@@ -119,7 +119,7 @@ class Manager():
         for i in range(0,15):
 
 
-            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","606060",0.9,0)
+            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","202020",0.8,0)
             if intX>0:
                 print 'find'
                 dm.moveto(intX,intY)
@@ -133,7 +133,7 @@ class Manager():
                 dm.leftdown()
                 sleep(1.000)
                 for i in range(0,3):
-                    dm.mover( 0, 50)
+                    dm.mover( 0, 30)
                     sleep(.200)
 
                 sleep(1.000)
@@ -143,7 +143,7 @@ class Manager():
                 sleep(1.500)
 
 
-                sleep(.500)
+            sleep(1.0)
 
             intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)
             if intX > 0:

@@ -4,7 +4,7 @@ from time import sleep
 class YaoQiFengYin:
     def __init__(self):
         self.dm = reg()
-        ret = self.dm.BindWindow(2099480, "normal", "normal", "normal", 0)
+        ret = self.dm.BindWindow(1903944, "normal", "normal", "normal", 0)
     def find(self):
         dm = self.dm
         while True:

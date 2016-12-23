@@ -31,7 +31,7 @@ def logVictoryLevel(dm,windowName="None"):
         else:
             tmp+=['0']
     for (index,i) in enumerate(expPos):
-        ret = dm.ocr(i[0],i[1],i[0]+levelSize[0],i[1]+levelSize[1],"f2edda-808080",0.7)
+        ret = dm.ocr(i[0],i[1],i[0]+levelSize[0],i[1]+levelSize[1],"ddd8c6-151515|a29b8c-151515|b8b1a1-151515",0.9)
         if ret!="exp":
             tmp[index]+="(full)"
             print 'full level try end script'

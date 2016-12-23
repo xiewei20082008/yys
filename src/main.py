@@ -12,7 +12,7 @@ dm = reg()
 def main():
     global dm
     # cf = ExpElf.ExpElf(dm,"jiangshi",4,0,isRush = False,shenLe = False)
-    # cf = ExpElf.ExpElf(dm,"dahao",11,99,isRush = True,isDelayRush = False,shenLe = True)
+    # cf = ExpElf.ExpElf(dm,"dahao",11,30,isRush = True,isDelayRush = False,shenLe = True)
     cf = ExpElf.ExpElf(dm,"xiaohao",10,20,isRush = True,isDelayRush = False,shenLe = True)
     cf.runUp()
     print 'thread end'
