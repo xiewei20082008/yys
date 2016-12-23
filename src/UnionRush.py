@@ -7,9 +7,9 @@ class UnionRush:
     def __init__(self,dm,windowName):
         self.dm = dm
         self.windowName = windowName
-        self.levelPos = [(324,154),(324,228),(324,302),(324,376),(527,154),(527,228),(527,303),(527,376)]
+        self.levelPos = [(314,169),(314,254),(314,339),(526,169),(526,254),(526,339)]
         # self.levelPos = [(324,154),(324,228),(324,302),(324,376),(324,450),(527,154),(527,228),(527,303),(527,376),(527,451)]
-        self.unionPos = [(266,206),(266,315),(266,425)]
+        self.unionPos = [(266,231),(266,347),(266,464)]
         self.acceptLevel = 29
         self.nowUnion = 0
         self.lastTime = time.time()
@@ -35,7 +35,7 @@ class UnionRush:
             return ret
         i = self.unionPos[self.nowUnion]
         ret = dm.getcolor(i[0],i[1])
-        if ret == "685a4f":
+        if ret == "31385a":
             dm.moveto(i[0],i[1])
             dm.leftClick()
             sleep(2.500)
@@ -59,31 +59,17 @@ class UnionRush:
         return True
     def findFirstY(self):
         dm = self.dm
-        x = 503
+        x = 495
         y = 135
+        lasty = 0
         # 找到第一个白点区域
-        while y<300:
-            ret = dm.GetColor(x,y)
-            try:
-                if int(ret[4:],16)>=0xa0:
-                    break
-            except:
-                return 0
-            y+=1
-        else:
-            return 0
-        while y<300:
-            ret = dm.GetColor(x,y)
-            try:
-                if int(ret[4:],16)<0xa0:
-                    break
-            except:
-                return 0
-            y+=1
-        else:
-            return 0
-        print 'result is ' + str(y)
-        return y
+        for i in range(y,400):
+            ret = dm.getcolor(x,i)
+            if int(ret[0:2],16) <= 0xa8:
+                if lasty!=0 and i-lasty>30:
+                    print lasty
+                    return lasty
+                lasty = i
     def main(self):
         dm = self.dm
         intX,intY = FindPic(dm,758,259,783,315,u"C:/anjianScript/公会突破/公会tab.bmp","000000",0.8,0)
@@ -122,10 +108,10 @@ class UnionRush:
             if y == 0:
                 returnCall()
                 return
-            diff_y = y - 138
+            diff_y = y - 151
             for i in self.levelPos:
                 shift_y = diff_y+i[1]
-                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.85)
+                s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.8)
                 dm_ret = dm.Capture(i[0],shift_y,i[0]+14,shift_y+11,"f:/pic/"+s+"."+str(time.time())+".bmp")
                 l = 100
                 if s.isdigit():
@@ -133,11 +119,12 @@ class UnionRush:
                 if l<=self.acceptLevel:
                     dm.moveto(i[0],shift_y)
                     dm.leftClick()
+                    # continue
                     sleep(1.5)#到点攻击的地方
                     #here just log test
-                    f = open('d:/color.txt','a+')
-                    ret = dm.getcolor(i[0]+106,shift_y+82)
-                    print >>f,ret
+                    # f = open('d:/color.txt','a+')
+                    # ret = dm.getcolor(i[0]+106,shift_y+82)
+                    # print >>f,ret
                     #攻击不能点
                     if dm.cmpColor(i[0]+106,shift_y+82,"f7b25a",1) !=0:
                         print 'exit for attack cd'
