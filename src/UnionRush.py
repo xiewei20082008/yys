@@ -70,6 +70,7 @@ class UnionRush:
                     print lasty
                     return lasty
                 lasty = i
+        return 0
     def main(self):
         dm = self.dm
         intX,intY = FindPic(dm,758,259,783,315,u"C:/anjianScript/公会突破/公会tab.bmp","000000",0.8,0)

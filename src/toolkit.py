@@ -14,6 +14,19 @@ client = Client.Client()
 t_client = threading.Thread(target = client.send)
 t_client.start()
 
+def dragMoveTo(dm,start,end):
+    sleep(.500)
+    times = 10.0
+    diff_x = (end[0]-start[0])/times
+    diff_y = (end[1]-start[1])/times
+    print diff_x
+    print diff_y
+
+    for i in range(10):
+        dm.mover(diff_x,diff_y)
+        sleep(.01)
+    sleep(1)
+
 def logVictoryLevel(dm,windowName="None"):
     if windowName == "jiangshi":
         return 1

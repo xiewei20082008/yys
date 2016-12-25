@@ -89,13 +89,14 @@ class ExpElf:
                 self.lastRushTime = time.time()
                 print 'end rush'
                 return
-            ret = dm.ocr(475,6,503,28,"e4ddca-505050", 0.7)
+            ret = dm.ocr(475,6,503,28,"e4ddca-505050", 0.8)
             print ret
             # if ret.isdigit() and int(ret)>self.aimEnergy:
             #     print 'start fb'
             #     dm.moveto(390, 305)
             #     dm.leftclick()
             #     sleep(.500)
+            print ret
             if ret.isdigit():
                 if int(ret) != self.nowEnergy:
                     self.nowEnergy = int(ret)
@@ -223,7 +224,7 @@ class ExpElf:
         while not self.gameOver:
             self.main()
             sleep(1)
-        sendToServer('elf thread end!')    
+        sendToServer('elf thread end!')
         print 'elf thread end!'
 
 def calDistance(a,b,c,d):

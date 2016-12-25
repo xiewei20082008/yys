@@ -170,16 +170,21 @@ class Manager():
                 print 'find icon'
                 dm.moveto(intX,intY)
                 dm.leftclick()
+                sleep(7.0)
+                dm.moveto(428,264)
+                dm.leftclick()
                 sleep(.500)
 
             intX,intY = FindPic(dm,444,318,509,361,u"更新确定.bmp","050505",0.8,0)
             if intX>0:
+                print 'update'
                 dm.moveto(intX,intY)
                 dm.leftclick()
                 sleep(.500)
 
             intX,intY = FindPic(dm,646,170,688,209,u"更新叉.bmp","050505",0.8,0)
             if intX>0:
+                print 'cross'
                 dm.moveto(intX,intY)
                 dm.leftclick()
                 sleep(.500)
@@ -187,17 +192,39 @@ class Manager():
             intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0)
             if intX>0:
                 sleep(5.0)
-                dm.moveto(431,103)
+                dm.moveto(336,154)
                 dm.leftClick()
                 sleep(7.0)
                 print 'enter game ok'
                 return True
 
-            if dm.cmpColor(730,20,"d6c7a5-0a0a0a",1) !=0:
-                print 'click once'
-                dm.moveto(397,441)
+            intX,intY = FindPic(dm,120,210,168,266,u"服务器选择.bmp","030303",0.8,0)
+            if intX>0:
+                print 'chosse server start'
+                sleep(2.0)
+                dm.moveto(347,273)
+                dm.leftClick()
+                sleep(5.0)
+                dm.moveto(195,458)
+                dm.leftClick()
+                sleep(1.5)
+                dm.moveto(201,412)
+                dm.leftClick()
+                sleep(1.500)
+                dm.moveto(400,442)
+                #点击开始游戏
+                dm.leftClick()
+                sleep(7.000)
+                dm.moveto(400,442)
                 dm.leftclick()
                 sleep(.500)
+                print 'choose server ok'
+
+            # if dm.cmpColor(730,20,"d6c7a5-0a0a0a",1) !=0:
+            #     print 'click once'
+            #     dm.moveto(601,202)
+            #     dm.leftclick()
+            #     sleep(2.500)
 
             sleep(1.5)
         else:
@@ -260,7 +287,7 @@ class Deamon:
                 elif script.lastAliveTime ==0:
                     sendToServer(windowName+': restart for lastAliveTime is zero')
                     return True
-                elif time.time() - script.lastAliveTime > 11*60:
+                elif time.time() - script.lastAliveTime > 15*60:
                     sendToServer(windowName+': restart for script timeout')
                     dm.Capture(0,0,800,600,'f:/timeoutPic/'+str(time.time())+'.bmp')
                     resetScript(script)
