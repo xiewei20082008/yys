@@ -6,7 +6,7 @@ import datetime
 import pythoncom
 import Client
 import threading
-
+from ctypes import *
 
 dm_send = None
 
@@ -56,17 +56,23 @@ def logVictoryLevel(dm,windowName="None"):
     dm.useDict(nowDict)
     return returnV
 
-
 def reg():
-    dm = win32com.client.DispatchEx('dm.dmsoft')
+    dm = win32com.client.Dispatch('dm.dmsoft')
     print dm.ver()
-    ret = dm.Reg("xiewei200820088ca5e457a09d6e301df9a582c7fcc74c","1")
-    if ret!=1:
-        print ret
-        return 0
-    else:
-        print 'reg success'
-        return dm
+
+    hMod = windll.kernel32.GetModuleHandleA('dm.dll')
+    memarray = (c_char*1).from_address(hMod+0x1063D0)
+    print memarray[0]
+    memarray[0] ='1'
+    print memarray[0]
+    return dm
+    # ret = dm.Reg("xiewei200820088ca5e457a09d6e301df9a582c7fcc74c","1")
+    # if ret!=1:
+    #     print ret
+    #     return 0
+    # else:
+    #     print 'reg success'
+    #     return dm
 
 
 def moveWindowAndBind(dm,windowName):
@@ -112,7 +118,7 @@ def send1(dm,message):
     hwnd = dm.FindWindow("",u"文件传输助手")
     if hwnd == 0:
         return
-    ret = dm.BindWindow(hwnd,"dx","windows","windows",0)
+    ret = dm.BindWindow(hwnd,"dx","dx","windows",0)
     dm.MoveTo(293, 530)
     dm.leftClick()
     sleep(.500)

@@ -10,14 +10,16 @@ class UnionRush:
         self.levelPos = [(314,169),(314,254),(314,339),(526,169),(526,254),(526,339)]
         # self.levelPos = [(324,154),(324,228),(324,302),(324,376),(324,450),(527,154),(527,228),(527,303),(527,376),(527,451)]
         self.unionPos = [(266,231),(266,347),(266,464)]
-        self.acceptLevel = 29
+        self.acceptLevel = 34
         self.nowUnion = 0
         self.lastTime = time.time()
     def exitRush(self):
         dm = self.dm
         for i in range (0,30):
+            print 'try exit'
             intX,intY = FindPic(dm,223,525,320,601,u"C:/anjianScript/通用经验/起始页.bmp|C:/anjianScript/通用经验/起始页1.bmp","000000",0.9,0)
             if intX > 0 and intY > 0:
+                print 'exit successful'
                 return True
             intX,intY = FindPic(dm,300,50,460,150,u"C:/anjianScript/通用经验/顶部结界突破.bmp|C:/anjianScript/通用经验/顶部结界突破1.bmp","050505",0.8,0)
             if intX > 0 and intY > 0:
@@ -34,8 +36,9 @@ class UnionRush:
             ret = self.exitRush()
             return ret
         i = self.unionPos[self.nowUnion]
-        ret = dm.getcolor(i[0],i[1])
-        if ret == "31385a":
+
+        if dm.cmpColor(i[0],i[1],"31385a",0.9) == 0:
+            print 'union not rush through' + str(self.nowUnion)
             dm.moveto(i[0],i[1])
             dm.leftClick()
             sleep(2.500)
@@ -48,12 +51,12 @@ class UnionRush:
             return False
     def runUp(self):
         while True:
-            if time.time() - self.lastTime >90:
+            if time.time() - self.lastTime >120:
                 ret = self.exitRush()
                 if ret:
                     return True
             ret = self.main()
-            if ret :
+            if ret:
                 return True
             sleep(1)
         return True
@@ -107,13 +110,13 @@ class UnionRush:
         for i in range(0,5):
             y = self.findFirstY()
             if y == 0:
-                returnCall()
+                dm.useDict(v)
                 return
             diff_y = y - 151
             for i in self.levelPos:
                 shift_y = diff_y+i[1]
                 s = dm.Ocr(i[0],shift_y,i[0]+14,shift_y+11,"979082-202020|d5cfbe-202020|f6f1de-202020|746c60-101010",0.8)
-                dm_ret = dm.Capture(i[0],shift_y,i[0]+14,shift_y+11,"f:/pic/"+s+"."+str(time.time())+".bmp")
+                dm_ret = dm.Capture(i[0],shift_y,i[0]+14,shift_y+11,"c:/pic/"+s+"."+str(time.time())+".bmp")
                 l = 100
                 if s.isdigit():
                     l = int(s)
@@ -135,9 +138,10 @@ class UnionRush:
                         returnCall()
                         return
                     #
+                    print 'start attack:'+str(i[0]+106)+','+str(shift_y+82)
                     dm.moveto(i[0]+106,shift_y+82)
                     dm.leftclick()
-                    sleep(.500)
+                    sleep(1.000)
                     sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
                     self.lastTime = time.time()
                     sleep(.500)

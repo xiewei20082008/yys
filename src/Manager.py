@@ -12,6 +12,7 @@ class Manager():
         self.dm_manager = reg()
         self.dm_dahao = reg()
         self.dm_xiaohao= reg()
+
         self.dm_manager.SetShowErrorMsg(0)
         self.dm_dahao.SetShowErrorMsg(0)
         self.dm_xiaohao.SetShowErrorMsg(0)

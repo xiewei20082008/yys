@@ -147,6 +147,12 @@ class ExpElf:
                 else:
                     self.monsterNum = 0
 
+        intX,intY = FindPic(dm,300,50,460,150,u"C:/anjianScript/通用经验/顶部结界突破.bmp|C:/anjianScript/通用经验/顶部结界突破1.bmp","050505",0.8,0)
+        if intX > 0 and intY > 0:
+            dm.moveto(63,566)
+            dm.leftClick()
+            sleep(1.0)
+
     def chooseMonster(self):
         dm = self.dm
         if self.monsterNum == 0:

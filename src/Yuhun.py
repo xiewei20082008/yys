@@ -1,6 +1,7 @@
 #coding=utf8
 from toolkit import *
 from time import sleep
+import datetime
 import time
 import threading
 class Yuhun:
@@ -41,11 +42,11 @@ class Yuhun:
             sleep(.500)
         intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
-            dm.Capture(0,0,800,600,"f:/bonus/"+self.windowName+str(time.time())+".bmp")
+            dm.Capture(0,0,800,600,"e:/bonus/"+self.windowName+str(time.time())+".bmp")
             self.nowTimes+=1
             if self.nowTimes >= self.times and self.times!=0:
                 return False
-            sendToServer(str(time.time())+': finish yunhun '+str(self.nowTimes)+' time')
+            sendToServer(str(datetime.datetime.now())+': finish yunhun '+str(self.nowTimes)+' time')
             dm.moveto(307, 121)
             dm.leftclick()
             sleep(.500)
