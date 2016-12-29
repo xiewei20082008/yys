@@ -12,11 +12,10 @@ dm = reg()
 def main():
     global dm
     print dm
-    dm.SetMouseDelay("windows",70)
-    dm.lockinput(2)
+    # dm.SetMouseDelay("windows",150)
     # cf = ExpElf.ExpElf(dm,"jiangshi",4,0,isRush = False,shenLe = False)
-    # cf = ExpElf.ExpElf(dm,"dahao",11,10,isRush = True,isDelayRush = False,shenLe = True)
-    cf = ExpElf.ExpElf(dm,"xiaohao",11,90,isRush = True,isDelayRush = False,shenLe = True)
+    cf = ExpElf.ExpElf(dm,"dahao",11,10,isRush = True,isDelayRush = False,shenLe = True)
+    # cf = ExpElf.ExpElf(dm,"xiaohao",11,10,isRush = True,isDelayRush = False,shenLe = True)
     cf.runUp()
     print 'thread end'
 

@@ -84,24 +84,32 @@ class FeatureDetector:
         pass
 fd = FeatureDetector()
 
-img = cv2.imread('1.bmp')
+img1 = cv2.imread('1.bmp')
 img2 = cv2.imread('3.bmp')
+img_gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY);
+orb = cv2.ORB(scaleFactor=0.8)
 sift = cv2.SIFT()
-k_img,des_img = sift.detectAndCompute(img,None)
+k_img,des_img = sift.detectAndCompute(img1,None)
 k_img2,des_img2 = sift.detectAndCompute(img2,None)
 
+k1,des1 = orb.detectAndCompute(img1,None)
+k2,des2 = orb.detectAndCompute(img2,None)
 
-oimg = cv2.drawKeypoints(img,k_img)
 
-FLANN_INDEX_KDTREE = 0
-index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-search_params = dict(checks=50)   # or pass empty dictionary
-flann = cv2.FlannBasedMatcher(index_params,search_params)
+# oimg = cv2.drawKeypoints(img2,k2)
+# fd.draw(oimg)
 
-matches = flann.match(des_img,des_img2)
+# FLANN_INDEX_KDTREE = 0
+# index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+# search_params = dict(checks=50)   # or pass empty dictionary
+# flann = cv2.FlannBasedMatcher(index_params,search_params)
+
+bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+matches = bf.match(des1,des2)
 goodmatches = []
 for i in matches:
-    if(i.distance<200):
+    if(i.distance<20):
         goodmatches.append(i)
-oimg = drawMatches(img,k_img,img2,k_img2,goodmatches)
+# oimg = drawMatches(img,k_img,img2,k_img2,matches)
+oimg = drawMatches(img1,k1,img2,k2,goodmatches)
 fd.draw(oimg)

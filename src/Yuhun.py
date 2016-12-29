@@ -9,6 +9,7 @@ class Yuhun:
         self.dm = dm
         self.windowName = windowName
         self.times = times
+        self.add = 1
         self.nowTimes = 0
 
     def mainLoop(self,dm):
@@ -32,20 +33,22 @@ class Yuhun:
             sleep(.500)
         intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
+            self.nowTimes+= self.add
+            self.add = 0
+            if self.nowTimes >= self.times and self.times!=0:
+                return False
             dm.moveto(307, 121)
             dm.leftclick()
             sleep(.500)
         intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
+            self.add = 1
             dm.moveto(307, 121)
             dm.leftclick()
             sleep(.500)
         intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
             dm.Capture(0,0,800,600,"e:/bonus/"+self.windowName+str(time.time())+".bmp")
-            self.nowTimes+=1
-            if self.nowTimes >= self.times and self.times!=0:
-                return False
             sendToServer(str(datetime.datetime.now())+': finish yunhun '+str(self.nowTimes)+' time')
             dm.moveto(307, 121)
             dm.leftclick()
@@ -70,8 +73,8 @@ dm2 = reg()
 moveWindowAndBind(dm1,'dahao')
 moveWindowAndBind(dm2,'xiaohao')
 
-yuhun1 = Yuhun(dm1,'dahao')
-yuhun2 = Yuhun(dm2,'xiaohao')
+yuhun1 = Yuhun(dm1,'dahao',3)
+yuhun2 = Yuhun(dm2,'xiaohao',3)
 t1 = threading.Thread(target = yuhun1.runApp)
 t2 = threading.Thread(target = yuhun2.runApp)
 

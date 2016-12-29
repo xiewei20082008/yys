@@ -7,12 +7,25 @@ import pythoncom
 import Client
 import threading
 from ctypes import *
+import win32con
+import win32api
+import pywintypes
 
 dm_send = None
 
 client = Client.Client()
 t_client = threading.Thread(target = client.send)
 t_client.start()
+
+class Fan:
+    def __init__(self,dm,windowName):
+        self.hwnd = dm.GetBindWindow()
+        self.pyhwnd = pywintypes.HANDLE(int(self.hwnd))
+    def leftclick(self,x,y):
+        lParam = y <<16 | x
+        win32api.SendMessage(self.pyhwnd, win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, lParam);
+        sleep(.050)
+        win32api.SendMessage(self.pyhwnd,win32con.WM_LBUTTONUP, 0,lParam);
 
 def dragMoveTo(dm,start,end):
     sleep(.500)
@@ -60,7 +73,7 @@ def reg():
     dm = win32com.client.Dispatch('dm.dmsoft')
     print dm.ver()
 
-    hMod = windll.kernel32.GetModuleHandleA('dm.dll')
+    hMod = windll.kernel32.GetModuleHandleA('dm1.dll')
     memarray = (c_char*1).from_address(hMod+0x1063D0)
     print memarray[0]
     memarray[0] ='1'
@@ -87,6 +100,7 @@ def moveWindowAndBind(dm,windowName):
     # ret = dm.MoveWindow(hwnd, -2 , -38)
 
     setDict(dm)
+    return hwndGame
 def setDict(dm):
     rootPath = os.path.abspath('..')
     # dm.SetPath("../")

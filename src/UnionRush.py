@@ -28,6 +28,8 @@ class UnionRush:
                 sleep(1.0)
                 continue
             sleep(.500)
+
+            autoBattle(self.dm,shenLe=True)
         else:
             return False
     def rushAllUnion(self):
@@ -51,7 +53,7 @@ class UnionRush:
             return False
     def runUp(self):
         while True:
-            if time.time() - self.lastTime >120:
+            if time.time() - self.lastTime >180:
                 ret = self.exitRush()
                 if ret:
                     return True
@@ -87,7 +89,7 @@ class UnionRush:
             ret = self.rushAllUnion()
             return ret
 
-        autoBattle(dm,shenLe=True)
+        autoBattle(self.dm,shenLe=True)
         return False
     def testRecog(self):
         dm = self.dm
@@ -140,10 +142,10 @@ class UnionRush:
                     #
                     print 'start attack:'+str(i[0]+106)+','+str(shift_y+82)
                     dm.moveto(i[0]+106,shift_y+82)
+                    sleep(.500)
                     dm.leftclick()
                     sleep(1.000)
                     sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
-                    self.lastTime = time.time()
                     sleep(.500)
                     returnCall()
                     return

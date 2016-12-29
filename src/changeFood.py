@@ -90,3 +90,9 @@ class ChangeFood:
         #     print 'full'
 
         print moveableFoods
+if __name__ == "__main__":
+    dm = reg()
+    moveWindowAndBind(dm,'dahao')
+    cf = ChangeFood()
+    cf.
+    dm.UnBindWindow()
