@@ -26,6 +26,8 @@ class Fan:
         win32api.SendMessage(self.pyhwnd, win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, lParam);
         sleep(.050)
         win32api.SendMessage(self.pyhwnd,win32con.WM_LBUTTONUP, 0,lParam);
+    def showHwnd(self):
+        print self.hwnd
 
 def dragMoveTo(dm,start,end):
     sleep(.500)
@@ -141,6 +143,7 @@ def send1(dm,message):
     dm.moveto(510, 564)
     dm.leftClick()
 def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "none"):
+    fan = Fan(dm,windowName)
     returnV = 1
     intX,intY = FindPic(dm,500,300,570,370,u"C:/anjianScript/阴阳师碎片/协助.bmp","101010", 0.8, 0)
     if intX > 0:
@@ -148,18 +151,16 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
         print 'find assist'
         intX,intY = FindPic(dm,409,358,448,383,u"C:/anjianScript/通用经验/协助金币.bmp","202020", 0.75, 0)
         if intX>0:
-            dm.moveto(529,391)
-            dm.leftClick()
+            fan.leftclick(529,391)
             sleep(.500)
         else:
-            dm.moveto(ensureX, ensureY)
-            dm.leftclick()
+            fan.leftclick(ensureX,ensureY)
             sleep(.500)
+
     if shenLe:
         intX,intY = FindPic(dm,18,501,36,523,u"C:/anjianScript/通用经验/战斗指南针.bmp","000000",0.8,0)
         if intX>0:
-            dm.moveto(intX,intY)
-            dm.leftclick()
+            fan.leftclick(intX,intY)
             sleep(3)
 
         intX,intY = FindPic(dm,17,553,55,572,u"C:/anjianScript/通用经验/手动.bmp","000000",0.8,0)
@@ -167,24 +168,20 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             sleep(.100)
             zhaoyuX,zhaoyuY = FindPic(dm,669,553,702,579,u"C:/anjianScript/通用经验/招鱼.bmp","000000",1,0)
             if zhaoyuX>0:
-                dm.moveto(zhaoyuX,zhaoyuY)
-                dm.leftclick()
+                fan.leftclick(zhaoyuX,zhaoyuY)
                 sleep(.700)
-                dm.moveto(416,282)
-                dm.leftclick()
+                fan.leftclick(416,262)
                 sleep(.300)
             elif dm.cmpColor(602,541,"b47d30-101010",1)==0:#自动手动切换
-                dm.moveto(intX,intY)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
                 sleep(.300)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
                 sleep(.300)
             return 2
 
         intX,intY = FindPic(dm,13,549,60,584,u"C:/anjianScript/通用经验/自动.bmp","000000",0.8,0)
         if intX>0:
-            dm.moveto(intX,intY)
-            dm.leftclick()
+            fan.leftclick(intX,intY)
             sleep(.500)
             return 2
 
@@ -192,14 +189,12 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
 
     intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
     if intX>0:
-        dm.moveto(724,500)
-        dm.leftclick()
+        fan.leftclick(724,500)
         sleep(.500)
 
     intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/失败鼓.bmp","000000",0.8,0)
     if intX>0:
-        dm.moveto(intX,intY)
-        dm.leftclick()
+        fan.leftclick(intX,intY)
         sleep(.500)
 
     intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
@@ -210,26 +205,22 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             returnV = logVictoryLevel(dm,windowName)
 
         if returnV!=0 or windowName == "jiangshi":
-            dm.moveto(307, 121)
-            dm.leftclick()
+            fan.leftclick(307, 121)
             sleep(.500)
 
     intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
     if intX > 0 and intY > 0:
         if cf is not None:
             cf.needRecord = True
-        dm.moveto(307, 121)
-        dm.leftclick()
+        fan.leftclick(307, 121)
         sleep(.500)
     intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
     if intX > 0 and intY > 0:
-        dm.moveto(307, 121)
-        dm.leftclick()
+        fan.leftclick(307, 121)
         sleep(.500)
     intX,intY = FindPic(dm,290, 332,356, 356,u"C:/anjianScript/阴阳师碎片/我很忙.bmp","000000", 0.9, 0)
     if intX > 0 and intY > 0:
-        dm.moveto(intX, intY)
-        dm.leftclick()
+        fan.leftclick(intX, intY)
         sleep(.500)
     return returnV
 

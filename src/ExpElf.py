@@ -8,7 +8,7 @@ import sys
 import time
 
 
-map2 = {5:(2,10),11:(2,10),4:(3,11),2:(3,11),10:(2,5)}
+map2 = {5:(2,10),11:(2,10),4:(3,11),2:(3,11),10:(2,5),16:(3,30)}
 
 class ExpElf:
     def __init__(self,dm,account,fb,aimEnergy,isRush = False,isDelayRush = False,shenLe = True,script= None):
@@ -25,6 +25,9 @@ class ExpElf:
         self.isRush = isRush
         self.script = script
         self.nowEnergy = 0
+        print 'test'
+        moveWindowAndBind(self.dm,self.windowName)
+        self.fan = Fan(dm,account)
 
         os.system('title '+'.'.join(account))
 
@@ -62,7 +65,7 @@ class ExpElf:
                 return False
 
         dm = self.dm
-
+        fan = self.fan
         ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName)
         if ret ==0:
             self.fullRecogTimes +=1
@@ -82,14 +85,14 @@ class ExpElf:
             print 'time diff is '+ str(time.time() - self.lastRushTime)
             if self.isRush and time.time() - self.lastRushTime > 600:
                 print 'start rush'
-                dm.moveto(intX,intY)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
+                sleep(.500)
                 ur = UnionRush(dm,self.windowName)
                 ur.runUp()
                 self.lastRushTime = time.time()
                 print 'end rush'
                 return
-            ret = dm.ocr(475,6,503,28,"e4ddca-505050", 0.8)
+            ret = dm.ocr(600,11,631,25,"e4ddca-505050", 0.8)
             print ret
             # if ret.isdigit() and int(ret)>self.aimEnergy:
             #     print 'start fb'
@@ -103,8 +106,7 @@ class ExpElf:
                     self.setScriptAlive()
                 if int(ret)>self.aimEnergy:
                     print 'start fb'
-                    dm.moveto(390, 305)
-                    dm.leftclick()
+                    fan.leftclick(390, 305)
                     sleep(.500)
 
         intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)
@@ -114,17 +116,14 @@ class ExpElf:
             hardX,hardY = FindPic(dm,280,208,317,221,u"C:/anjianScript/通用经验/hard.bmp","000000",0.7,0)
             if hardX > 0:
                 print 'find hard'
-                dm.moveto(hardX, hardY)
-                dm.leftclick()
+                fan.leftclick(hardX, hardY)
                 sleep(.500)
 
-            dm.moveto(intX, intY)
-            dm.leftclick()
+            fan.leftclick(intX, intY)
             sleep(.500)
         intX,intY = FindPic(dm,459, 316,507, 336,u"C:/anjianScript/通用经验/退出确认.bmp","000000",0.9,0)
         if intX > 0 and intY > 0:
-            dm.moveto(intX,intY)
-            dm.leftclick()
+            fan.leftclick(intX,intY)
             sleep(.500)
         intX,intY = FindPic(dm,644, 544,749, 568,u"C:/anjianScript/通用经验/战斗大场景.bmp","000000",0.6,0)
         if intX > 0 and intY > 0:
@@ -137,8 +136,7 @@ class ExpElf:
                 self.moved = True
                 sleep(1)
             elif self.monsterNum == 0:
-                dm.moveto(29, 39)
-                dm.leftclick()
+                fan.leftclick(29, 39)
                 sleep(.500)
             else:
                 ret = self.chooseMonster()
@@ -149,12 +147,12 @@ class ExpElf:
 
         intX,intY = FindPic(dm,300,50,460,150,u"C:/anjianScript/通用经验/顶部结界突破.bmp|C:/anjianScript/通用经验/顶部结界突破1.bmp","050505",0.8,0)
         if intX > 0 and intY > 0:
-            dm.moveto(63,566)
-            dm.leftClick()
+            fan.leftclick(63,566)
             sleep(1.0)
 
     def chooseMonster(self):
         dm = self.dm
+        fan = self.fan
         if self.monsterNum == 0:
             return 0
         times = 30
@@ -226,7 +224,6 @@ class ExpElf:
         print "10 seconds not found"
         return 0
     def runUp(self):
-        moveWindowAndBind(self.dm,self.windowName)
         while not self.gameOver:
             self.main()
             sleep(1)

@@ -13,8 +13,10 @@ class UnionRush:
         self.acceptLevel = 34
         self.nowUnion = 0
         self.lastTime = time.time()
+        self.fan = Fan(dm,windowName)
     def exitRush(self):
         dm = self.dm
+        fan = self.fan
         for i in range (0,30):
             print 'try exit'
             intX,intY = FindPic(dm,223,525,320,601,u"C:/anjianScript/通用经验/起始页.bmp|C:/anjianScript/通用经验/起始页1.bmp","000000",0.9,0)
@@ -23,8 +25,7 @@ class UnionRush:
                 return True
             intX,intY = FindPic(dm,300,50,460,150,u"C:/anjianScript/通用经验/顶部结界突破.bmp|C:/anjianScript/通用经验/顶部结界突破1.bmp","050505",0.8,0)
             if intX > 0 and intY > 0:
-                dm.moveto(63,566)
-                dm.leftClick()
+                fan.leftclick(63,566)
                 sleep(1.0)
                 continue
             sleep(.500)
@@ -34,6 +35,7 @@ class UnionRush:
             return False
     def rushAllUnion(self):
         dm = self.dm
+        fan = self.fan
         if self.nowUnion>2:
             ret = self.exitRush()
             return ret
@@ -41,8 +43,7 @@ class UnionRush:
 
         if dm.cmpColor(i[0],i[1],"31385a",0.9) == 0:
             print 'union not rush through' + str(self.nowUnion)
-            dm.moveto(i[0],i[1])
-            dm.leftClick()
+            fan.leftclick(i[0],i[1])
             sleep(2.500)
             ret = self.recogLevel()
             self.nowUnion +=1
@@ -78,10 +79,10 @@ class UnionRush:
         return 0
     def main(self):
         dm = self.dm
+        fan = self.fan
         intX,intY = FindPic(dm,758,259,783,315,u"C:/anjianScript/公会突破/公会tab.bmp","000000",0.8,0)
         if intX>0:
-            dm.moveto(intX,intY)
-            dm.leftClick()
+            fan.leftclick(intX,intY)
             sleep(.500)
         intX,intY = FindPic(dm,759,259,780,316,u"C:/anjianScript/公会突破/公会tabLight.bmp","000000",0.8,0)
         if intX>0:
@@ -102,6 +103,7 @@ class UnionRush:
 
     def recogLevel(self):
         dm = self.dm
+        fan = self.fan
         def returnCall():
             self.lastTime = time.time()
             dm.useDict(v)
@@ -123,8 +125,7 @@ class UnionRush:
                 if s.isdigit():
                     l = int(s)
                 if l<=self.acceptLevel:
-                    dm.moveto(i[0],shift_y)
-                    dm.leftClick()
+                    fan.leftclick(i[0],shift_y)
                     # continue
                     sleep(1.5)#到点攻击的地方
                     #here just log test
@@ -134,16 +135,13 @@ class UnionRush:
                     #攻击不能点
                     if dm.cmpColor(i[0]+106,shift_y+82,"f7b25a",1) !=0:
                         print 'exit for attack cd'
-                        dm.moveto(35,550)
-                        dm.leftClick()
+                        fan.leftclick(35,550)
                         sleep(.500)
                         returnCall()
                         return
                     #
                     print 'start attack:'+str(i[0]+106)+','+str(shift_y+82)
-                    dm.moveto(i[0]+106,shift_y+82)
-                    sleep(.500)
-                    dm.leftclick()
+                    fan.leftclick(i[0]+106,shift_y+82)
                     sleep(1.000)
                     sendToServer(str(datetime.datetime.now())[11:18]+"|"+str(self.windowName)+"|Attack Union "+str(self.nowUnion) )
                     sleep(.500)

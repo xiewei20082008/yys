@@ -11,25 +11,25 @@ class Yuhun:
         self.times = times
         self.add = 1
         self.nowTimes = 0
+        self.fan = Fan(dm,windowName)
 
-    def mainLoop(self,dm):
+    def mainLoop(self,dm,fan = None):
+        if not fan:
+            fan = self.fan
         intX,intY = FindPic(dm,554,428,671,479,u"C:/anjianScript/通用经验/御魂start.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
-            dm.moveto(intX,intY)
-            dm.leftclick()
+            fan.leftclick(intX,intY)
             sleep(.500)
         intX,intY = FindPic(dm,58,132,119,187,u"C:/anjianScript/通用经验/御魂cross.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
             sleep(1.5)
             intX,intY = FindPic(dm,58,132,119,187,u"C:/anjianScript/通用经验/御魂cross.bmp","030303",0.8,0)
             if intX > 0 and intY > 0:
-                dm.moveto(intX,intY)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
                 sleep(.500)
         intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
         if intX>0:
-            dm.moveto(724,500)
-            dm.leftclick()
+            fan.leftclick(724,500)
             sleep(.500)
         intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
@@ -37,26 +37,22 @@ class Yuhun:
             self.add = 0
             if self.nowTimes >= self.times and self.times!=0:
                 return False
-            dm.moveto(307, 121)
-            dm.leftclick()
+            fan.leftclick(307, 121)
             sleep(.500)
         intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
             self.add = 1
-            dm.moveto(307, 121)
-            dm.leftclick()
+            fan.leftclick(307, 121)
             sleep(.500)
         intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
             dm.Capture(0,0,800,600,"e:/bonus/"+self.windowName+str(time.time())+".bmp")
             sendToServer(str(datetime.datetime.now())+': finish yunhun '+str(self.nowTimes)+' time')
-            dm.moveto(307, 121)
-            dm.leftclick()
+            fan.leftclick(307, 121)
             sleep(.500)
         intX,intY = FindPic(dm,413,312,543,381,u"C:/anjianScript/通用经验/御魂确定.bmp","030303", 0.8, 0)
         if intX > 0 and intY > 0:
-            dm.moveto(intX,intY)
-            dm.leftclick()
+            fan.leftclick(intX,intY)
             sleep(.500)
         return True
 

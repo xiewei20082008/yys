@@ -117,14 +117,14 @@ class Manager():
         elif windowName== "xiaohao":
             dm = self.dm_xiaohao
         dm.setPath(u"c:/anjianScript/通用经验")
+        fan = Fan(dm,windowName)
         for i in range(0,15):
 
 
-            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","202020",0.8,0)
+            intX,intY = FindPic(dm,673,69,799,404,u"第"+str(chapter)+u"章.bmp","404040",0.7,0)
             if intX>0:
                 print 'find'
-                dm.moveto(intX,intY)
-                dm.leftClick()
+                fan.leftclick(intX,intY)
                 sleep(2.500)
 
             else:
@@ -148,8 +148,7 @@ class Manager():
 
             intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)
             if intX > 0:
-                dm.moveto(659,163)
-                dm.leftClick()
+                fan.leftclick(659,163)
                 sleep(.500)
                 return True
 
@@ -164,37 +163,33 @@ class Manager():
         elif windowName== "xiaohao":
             dm = self.dm_xiaohao
         dm.setPath(u"c:/anjianScript/通用经验")
+        fan = Fan(dm,windowName)
         print 'in enter game'
         for i in range(0,40):
-            intX,intY = FindPic(dm,537,53,635,157,u"阴阳师图标.bmp","202020",0.8,0)
+            intX,intY = FindPic(dm,163,48,270,156,u"阴阳师图标.bmp","202020",0.8,0)
             if intX>0:
                 print 'find icon'
-                dm.moveto(intX,intY)
-                dm.leftclick()
-                sleep(7.0)
-                dm.moveto(428,264)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
+                sleep(15.0)
+                fan.leftclick(428,264)
                 sleep(.500)
 
             intX,intY = FindPic(dm,444,318,509,361,u"更新确定.bmp","050505",0.8,0)
             if intX>0:
                 print 'update'
-                dm.moveto(intX,intY)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
                 sleep(.500)
 
             intX,intY = FindPic(dm,646,170,688,209,u"更新叉.bmp","050505",0.8,0)
             if intX>0:
                 print 'cross'
-                dm.moveto(intX,intY)
-                dm.leftclick()
+                fan.leftclick(intX,intY)
                 sleep(.500)
 
             intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0)
             if intX>0:
                 sleep(5.0)
-                dm.moveto(336,154)
-                dm.leftClick()
+                fan.leftclick(336,154)
                 sleep(7.0)
                 print 'enter game ok'
                 return True
@@ -203,21 +198,16 @@ class Manager():
             if intX>0:
                 print 'chosse server start'
                 sleep(2.0)
-                dm.moveto(347,273)
-                dm.leftClick()
+                fan.leftclick(347,273)
                 sleep(5.0)
-                dm.moveto(195,458)
-                dm.leftClick()
+                fan.leftclick(195,458)
                 sleep(1.5)
-                dm.moveto(201,412)
-                dm.leftClick()
+                fan.leftclick(201,412)
                 sleep(1.500)
-                dm.moveto(400,442)
                 #点击开始游戏
-                dm.leftClick()
+                fan.leftclick(400,442)
                 sleep(7.000)
-                dm.moveto(400,442)
-                dm.leftclick()
+                fan.leftclick(400,442)
                 sleep(.500)
                 print 'choose server ok'
 
@@ -281,6 +271,7 @@ class Deamon:
             return
         def openWindowAndRun(windowName,script,dm):
             def isScriptNeedRestart():
+                print '-- alive time is'+str(time.time() - script.lastAliveTime)
                 if script.elf is not None and script.elf.gameOver is True:
                     resetScript(script)
                     sendToServer(windowName+': restart for gameOver')
@@ -288,7 +279,7 @@ class Deamon:
                 elif script.lastAliveTime ==0:
                     sendToServer(windowName+': restart for lastAliveTime is zero')
                     return True
-                elif time.time() - script.lastAliveTime > 15*60:
+                elif time.time() - script.lastAliveTime > 25*60:
                     sendToServer(windowName+': restart for script timeout')
                     dm.Capture(0,0,800,600,'f:/timeoutPic/'+str(time.time())+'.bmp')
                     resetScript(script)
