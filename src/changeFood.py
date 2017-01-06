@@ -31,6 +31,7 @@ class ChangeFood:
         dm = self.dm
         fan = self.fan
         _method_change = None
+        sleep(5)
         while True:
             intX,intY = FindPic(dm,13,490,38,522,u"C:/anjianScript/通用经验/战斗灯笼.bmp","030303",0.9,0)
             if intX >0:

@@ -14,8 +14,8 @@ def main():
     print dm
     # dm.SetMouseDelay("windows",150)
     # cf = ExpElf.ExpElf(dm,"jiangshi",1,0,isRush = False,shenLe = False)
-    cf = ExpElf.ExpElf(dm,"dahao",11,10,isRush = True,isDelayRush = False,shenLe = True)
-    # cf = ExpElf.ExpElf(dm,"xiaohao",11,10,isRush = True,isDelayRush = False,shenLe = True)
+    # cf = ExpElf.ExpElf(dm,"dahao",11,10,isRush = True,isDelayRush = False,shenLe = True)
+    cf = ExpElf.ExpElf(dm,"xiaohao",11,10,isRush = True,isDelayRush = False,shenLe = True)
     cf.runUp()
     print 'thread end'
 
