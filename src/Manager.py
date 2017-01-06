@@ -189,7 +189,7 @@ class Manager():
             intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0)
             if intX>0:
                 sleep(5.0)
-                fan.leftclick(336,154)
+                fan.leftclick(434,110)
                 sleep(7.0)
                 print 'enter game ok'
                 return True
@@ -199,7 +199,7 @@ class Manager():
                 print 'chosse server start'
                 sleep(2.0)
                 fan.leftclick(347,273)
-                sleep(5.0)
+                sleep(10.0)
                 fan.leftclick(195,458)
                 sleep(1.5)
                 fan.leftclick(201,412)

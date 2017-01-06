@@ -22,8 +22,8 @@ class Yuhun:
             sleep(.500)
         intX,intY = FindPic(dm,58,132,119,187,u"C:/anjianScript/通用经验/御魂cross.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
-            sleep(1.5)
-            intX,intY = FindPic(dm,58,132,119,187,u"C:/anjianScript/通用经验/御魂cross.bmp","030303",0.8,0)
+            sleep(0.5)
+            intX,intY = FindPic(dm,58,132,119,187,u"C:/anjianScript/通用经验/御魂cross.bmp","030303",0.7,0)
             if intX > 0 and intY > 0:
                 fan.leftclick(intX,intY)
                 sleep(.500)
@@ -46,7 +46,7 @@ class Yuhun:
             sleep(.500)
         intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
         if intX > 0 and intY > 0:
-            dm.Capture(0,0,800,600,"e:/bonus/"+self.windowName+str(time.time())+".bmp")
+            dm.Capture(0,0,800,600,"c:/bonus/"+self.windowName+str(time.time())+".bmp")
             sendToServer(str(datetime.datetime.now())+': finish yunhun '+str(self.nowTimes)+' time')
             fan.leftclick(307, 121)
             sleep(.500)
@@ -69,8 +69,8 @@ dm2 = reg()
 moveWindowAndBind(dm1,'dahao')
 moveWindowAndBind(dm2,'xiaohao')
 
-yuhun1 = Yuhun(dm1,'dahao',3)
-yuhun2 = Yuhun(dm2,'xiaohao',3)
+yuhun1 = Yuhun(dm1,'dahao')
+yuhun2 = Yuhun(dm2,'xiaohao')
 t1 = threading.Thread(target = yuhun1.runApp)
 t2 = threading.Thread(target = yuhun2.runApp)
 

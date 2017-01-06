@@ -8,7 +8,7 @@ import sys
 import time
 
 
-map2 = {5:(2,10),11:(2,10),4:(3,11),2:(3,11),10:(2,5),16:(3,30)}
+map2 = {1:(2,10),5:(2,10),11:(2,10),4:(3,11),2:(3,11),10:(2,5),16:(3,30)}
 
 class ExpElf:
     def __init__(self,dm,account,fb,aimEnergy,isRush = False,isDelayRush = False,shenLe = True,script= None):
@@ -79,7 +79,8 @@ class ExpElf:
 
         self.fullRecogTimes = 0
 
-        intX,intY = FindPic(dm,223,525,320,601,u"C:/anjianScript/通用经验/起始页.bmp|C:/anjianScript/通用经验/起始页1.bmp","000000",0.9,0)
+        intX,intY = FindPic(dm,223,525,320,601,(u"C:/anjianScript/通用经验/起始页.bmp"
+            u"|C:/anjianScript/通用经验/起始页1.bmp|C:/anjianScript/通用经验/起始页2.bmp"),"000000",0.9,0)
         if intX > 0 and intY > 0:
             self.resetFB()
             print 'time diff is '+ str(time.time() - self.lastRushTime)
@@ -106,7 +107,7 @@ class ExpElf:
                     self.setScriptAlive()
                 if int(ret)>self.aimEnergy:
                     print 'start fb'
-                    fan.leftclick(390, 305)
+                    fan.leftclick(390, 300)
                     sleep(.500)
 
         intX,intY = FindPic(dm,534, 366,653, 441,u"C:/anjianScript/通用经验/探索页.bmp","000000",0.7,0)

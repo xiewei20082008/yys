@@ -26,11 +26,37 @@ class Fan:
         win32api.SendMessage(self.pyhwnd, win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, lParam);
         sleep(.050)
         win32api.SendMessage(self.pyhwnd,win32con.WM_LBUTTONUP, 0,lParam);
+    def leftdownmove(self,x,y):
+        lParam = y <<16 | x
+        win32api.SendMessage(self.pyhwnd, win32con.WM_MOUSEMOVE,win32con.MK_LBUTTON, lParam);
+        sleep(.050)
+    def leftdown(self,x,y)    :
+        lParam = y <<16 | x
+        win32api.SendMessage(self.pyhwnd, win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, lParam);
+        sleep(.050)
+    def leftup(self,x,y)    :
+        lParam = y <<16 | x
+        win32api.SendMessage(self.pyhwnd,win32con.WM_LBUTTONUP, 0,lParam);
+        sleep(.050)
     def showHwnd(self):
         print self.hwnd
 
-def dragMoveTo(dm,start,end):
-    sleep(.500)
+def isColorSimiliar(col1,col2,sim):
+    def rgbSim(a,b,sim):
+        return abs(a-b)<=sim
+    c1_1 = int(col1[0:2],16)
+    c1_2 = int(col1[2:4],16)
+    c1_3 = int(col1[4:6],16)
+    c2_1 = int(col2[0:2],16)
+    c2_2 = int(col2[2:4],16)
+    c2_3 = int(col2[4:6],16)
+
+    if rgbSim(c1_1,c2_1,sim) and rgbSim(c1_2,c2_2,sim) and rgbSim(c1_3,c2_3,sim):
+        return True
+    else:
+        return False
+def dragMoveTo(fan,start,end):
+    # sleep(.500)
     times = 10.0
     diff_x = (end[0]-start[0])/times
     diff_y = (end[1]-start[1])/times
@@ -38,9 +64,10 @@ def dragMoveTo(dm,start,end):
     print diff_y
 
     for i in range(10):
-        dm.mover(diff_x,diff_y)
+        fan.leftdownmove(int(start[0]+(i+1)*diff_x),int(start[1]+(i+1)*diff_y))
+        # dm.mover(diff_x,diff_y)
         sleep(.01)
-    sleep(1)
+    # sleep(1)
 
 def logVictoryLevel(dm,windowName="None"):
     if windowName == "jiangshi":
@@ -60,7 +87,8 @@ def logVictoryLevel(dm,windowName="None"):
             tmp+=['0']
     for (index,i) in enumerate(expPos):
         ret = dm.ocr(i[0],i[1],i[0]+levelSize[0],i[1]+levelSize[1],"ddd8c6-151515|a29b8c-151515|b8b1a1-151515",0.9)
-        if ret!="exp":
+        # if ret!="exp":
+        if 'e' not in ret and 'x' not in ret and 'p' not in ret:
             tmp[index]+="(full)"
             print 'full level try end script'
             returnV = 0
@@ -170,7 +198,11 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             if zhaoyuX>0:
                 fan.leftclick(zhaoyuX,zhaoyuY)
                 sleep(.700)
-                fan.leftclick(416,262)
+                fan.leftclick(365,274)
+                sleep(.300)
+                fan.leftclick(365,274)
+                sleep(.300)
+                fan.leftclick(365,274)
                 sleep(.300)
             elif dm.cmpColor(602,541,"b47d30-101010",1)==0:#自动手动切换
                 fan.leftclick(intX,intY)
