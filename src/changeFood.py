@@ -15,11 +15,69 @@ class ChangeFood:
     def recogFull(self):
         dm = self.dm
         dm.useDict(0)
-        ret = dm.FindStrFastExS(19,93,760,440,u"满",("eca614-101010|f7e447-151515|deae4a-151515"
-            "|ead643-151515|f1d518-151515|e39a34-151515|ad9334-151515|f7aa4a-151515"),0.8)
+        dm.SetExactOcr(1)
+
+        ret = FindMultiPic(dm,62,129,674,402,(u"C:/anjianScript/通用经验/满.bmp|"
+            u"C:/anjianScript/通用经验/满1.bmp"),"080808",1,0)
+        # ret = dm.FindStrExS(19,93,760,440,u"满",("f4c31b-303030|e3a943-303030|997a29-202020"),0.5)
         # print ret
+        print ret
+
 
         dm.useDict(1)
+        dm.SetExactOcr(0)
+        return ret
+    def startChange(self):
+        dm = self.dm
+        fan = self.fan
+        _method_change = None
+        while True:
+            intX,intY = FindPic(dm,13,490,38,522,u"C:/anjianScript/通用经验/战斗灯笼.bmp","030303",0.9,0)
+            if intX >0:
+                print 'find denlonog'
+                ret = self.recogFull()
+                if not ret:
+                    fan.leftclick(726,505) # 准备
+                    sleep(1)
+                    break
+                elif any (i[0]<195 for i in ret ):
+                    print 'change watch'
+                    fan.leftclick(152,268)
+                    sleep(.500)
+                    _method_change = self.changeWatchSide
+                    sleep(3.0)
+                else:
+                    print 'change battle'
+                    fan.leftclick(440,401)
+                    sleep(.500)
+                    _method_change = self.changeBattleSide
+                    sleep(3.0)
+
+            intX,intY = FindPic(dm,23,474,59,514,u"C:/anjianScript/通用经验/换狗粮N.bmp","030303",0.9,0)
+            if intX>0:
+                print 'n correct start change one side'
+                if _method_change:
+                    _method_change()
+                else:
+                    sendToServer('change one side but func is None!!')
+                    return False
+                sleep(1.0)
+                fan.leftclick(24,27)
+                sleep(3.000)
+            intX,intY = FindPic(dm,16,474,65,514,(u"C:/anjianScript/通用经验/换狗粮R.bmp|"
+                u"C:/anjianScript/通用经验/换狗狼全部.bmp"),"030303",0.9,0)
+            if intX>0:
+                fan.leftclick(41,491)
+                sleep(1)
+                fan.leftclick(40,354)
+                sleep(2)
+
+
+
+            sleep(1)
+        print 'change end'
+        return True
+
     def findStartPoints1(self):
         dm = self.dm
         count = 0
@@ -77,7 +135,7 @@ class ChangeFood:
         # sleep(1.500)
         dragMoveTo(fan,start,(start[0],end[1]))
         dragMoveTo(fan,(start[0],end[1]),end)
-        sleep(1.5)
+        sleep(.300)
         fan.leftup(start[0],end[1])
         # dm.leftup()
         sleep(1)
@@ -92,7 +150,6 @@ class ChangeFood:
                 if nowNum==num:
                     break
             self.changePage()
-            sleep(1)
     def changePage(self):
         print 'changePagestart'
         dm = self.dm
@@ -112,6 +169,9 @@ class ChangeFood:
     def changeBattleSide(self):
         aimPos = ((130,277),(410,265),(685,254))
         self.changeOneSide(3,aimPos)
+    def changeWatchSide(self):
+        aimPos = ((197,248),(535,214))
+        self.changeOneSide(2,aimPos)
 
 
         # for i in range(num):
@@ -180,6 +240,8 @@ if __name__ == "__main__":
     # start = (297,529)
     # end = (197,300)
     # cf.moveFood(start,end)
-    cf.changeBattleSide()
+    ret = cf.startChange()
+    print ret
+    # cf.changeWatchSide()
     # cf.moveFood()
     dm.UnBindWindow()

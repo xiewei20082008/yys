@@ -66,7 +66,7 @@ class ExpElf:
 
         dm = self.dm
         fan = self.fan
-        ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName)
+        ret = autoBattle(dm,self,shenLe = self.shenLe,isRecordLevel = True,windowName = self.windowName,isChangeFood = True)
         if ret ==0:
             self.fullRecogTimes +=1
             if self.fullRecogTimes>4:
