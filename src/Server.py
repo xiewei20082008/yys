@@ -14,7 +14,7 @@ class Server:
     def handlePhone(self,message,addr):
         if message == "readLog":
             print 'command readLog'
-            ret = os.popen('tail -n 40 /root/log.txt')
+            ret = os.popen('tail -n 20 /root/log.txt')
             returnMessage = ret.read()
             for i in range(3):
                 self.udpSerSock.sendto(returnMessage,addr)

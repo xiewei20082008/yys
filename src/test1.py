@@ -7,6 +7,7 @@ class A:
         print k
 a = A()
 a.t()
+
 # dm = reg()
 # hwnd = moveWindowAndBind(dm,'xiaohao')
 # fan = Fan(hwnd)

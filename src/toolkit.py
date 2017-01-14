@@ -25,7 +25,7 @@ class Fan:
     def leftclick(self,x,y):
         lParam = y <<16 | x
         win32api.SendMessage(self.pyhwnd, win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, lParam);
-        sleep(.050)
+        sleep(.100)
         win32api.SendMessage(self.pyhwnd,win32con.WM_LBUTTONUP, 0,lParam);
     def leftdownmove(self,x,y):
         lParam = y <<16 | x
@@ -71,6 +71,7 @@ class ChangeFood:
         dm = self.dm
         fan = self.fan
         _method_change = None
+        sleep(3.0)
         while True:
             intX,intY = FindPic(dm,13,490,38,522,u"C:/anjianScript/通用经验/战斗灯笼.bmp","030303",0.9,0)
             if intX >0:
@@ -194,16 +195,19 @@ class ChangeFood:
         print 'changePagestart'
         dm = self.dm
         fan = self.fan
-        start = (575,536)
-        end = (300,536)
-        dm.moveto(start[0],start[1])
-        fan.leftdown(start[0],start[1])
-        # dm.leftdown()
-        sleep(.500)
-        dragMoveTo(fan,start,end)
-        fan.leftup(end[0],end[1])
-        # dm.leftup()
-        sleep(1)
+
+        for i in range(3):
+            start = (575,536)
+            end = (300,536)
+            dm.moveto(start[0],start[1])
+            fan.leftdown(start[0],start[1])
+            # dm.leftdown()
+            sleep(.500)
+            dragMoveTo(fan,start,end)
+            fan.leftup(end[0],end[1])
+            # dm.leftup()
+            sleep(.500)
+
         print 'changePageend'
 
     def changeBattleSide(self):

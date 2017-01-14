@@ -5,7 +5,7 @@ class YaoQiFengYin:
     def __init__(self):
         self.dm = reg()
         # moveWindowAndBind(self.dm,'dahao')
-        ret = self.dm.BindWindow(4873902, "normal", "normal", "normal", 0)
+        ret = self.dm.BindWindow(1245938, "normal", "normal", "normal", 0)
         print ret
     def find(self):
         dm = self.dm
@@ -14,10 +14,10 @@ class YaoQiFengYin:
             if a==1:
                 print 's down'
                 break
-            # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/海坊主.bmp|c:/anjianScript/通用经验/海坊主1.bmp","101010",0.8,0)
+            # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/海坊主.bmp|c:/anjianScript/通用经验/海坊主1.bmp|c:/anjianScript/通用经验/海坊主2.bmp","101010",0.8,0)
             # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/跳跳哥哥.bmp","101010",0.7,0)
-            # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/椒图.bmp","101010",0.7,0)
-            intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/金币妖怪.bmp|c:/anjianScript/通用经验/金币妖怪1.bmp","030303",0.8,0)
+            intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/椒图.bmp","101010",0.7,0)
+            # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/金币妖怪.bmp|c:/anjianScript/通用经验/金币妖怪1.bmp","030303",0.8,0)
             # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/鬼使黑.bmp|c:/anjianScript/通用经验/鬼使黑1.bmp","101010",0.8,0)
             # intX,intY = FindPic(dm,221,145,408,391,u"c:/anjianScript/通用经验/二口女.bmp|c:/anjianScript/通用经验/二口女1.bmp","050505",0.9,0)
             if intX>0:
