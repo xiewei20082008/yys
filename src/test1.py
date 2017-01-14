@@ -1,12 +1,12 @@
-from toolkit import *
-class A:
-    def __init__(self):
-        k = 1
-        pass
-    def t(self):
-        print k
-a = A()
-a.t()
+from socket import *
+
+host = '172.246.84.119'
+tcpPort = 21568
+bufsize = 2000
+# tcp
+tcpSock = socket(AF_INET, SOCK_STREAM)
+tcpSock.connect((host,tcpPort))
+print 'here'
 
 # dm = reg()
 # hwnd = moveWindowAndBind(dm,'xiaohao')

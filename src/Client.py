@@ -9,20 +9,25 @@ class Client:
         self.q = Queue()
         self.host = '172.246.84.119'
         self.port = 21567
+        self.tcpPort = 21568
         self.bufsize = 1024
+        self.tcpSock = None
         self.udpCliSock = socket(AF_INET, SOCK_DGRAM)
+        self.tcpAddr(self.host,self.tcpPort)
         self.addr = (self.host,self.port)
         print 'socket ok'
-        self.udpCliSock.settimeout(10)
     def sendHeartbeat(self):
-        self.udpCliSock.settimeout(5)
         received = ''
         while True:
             nowtime = str(time.time())
             message = '~'.join([nowtime,'heartbeat',received])
-            self.udpCliSock.sendto(message,self.addr)
             try:
-                data,tmp = self.udpCliSock.recvfrom(self.bufsize)
+                self.tcpSock = socket(AF_INET, SOCK_STREAM)
+                self.tcpSock.settimeout(1)
+                self.tcpSock.connect(self.tcpAddr)
+                self.tcpSock.send(message)
+
+                data = self.tcpSock.recv(self.bufsize)
                 datas = data.split('~')
                 if len(datas)==3 and datas[0]==nowtime:
                     received = datas[1]
@@ -33,7 +38,7 @@ class Client:
                         f.write(' '.join(infos[1:]))
                         f.close()
                 print 'OK'
-
+                self.tcpSock.close()
             except:
                 print 'receive time out'
                 continue
@@ -43,15 +48,20 @@ class Client:
             s = self.q.get()
             nowTime = str(time.time())
             timeData = nowTime+"~"+s
-            self.udpCliSock.sendto(timeData,self.addr)
             print 'try send'
             try:
-                data,tmp = self.udpCliSock.recvfrom(self.bufsize)
+                self.tcpSock = socket(AF_INET, SOCK_STREAM)
+                self.tcpSock.settimeout(1)
+                self.tcpSock.connect(self.tcpAddr)
+                self.tcpSock.send(timeData)
+
+                data = self.tcpSock.recv(self.bufsize)
                 if data == nowTime:
                     print 'send ok'
                 else:
                     print 'receive wrong thing'
                     self.q.put(s)
+                self.tcpSock.close()
             except:
                 print 'receive time out'
                 if("(full)" in s):

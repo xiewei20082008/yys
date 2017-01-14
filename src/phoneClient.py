@@ -52,17 +52,37 @@ class Client:
     def __init__(self):
         self.host = '172.246.84.119'
         self.port = 21567
+        self.tcpPort = 21568
         self.bufsize = 2000
         self.udpCliSock = socket(AF_INET, SOCK_DGRAM)
         self.addr = (self.host,self.port)
+        self.tcpSock = None
+        # tcp
         print 'socket ok'
-        self.udpCliSock.settimeout(0.4)
+        # self.udpCliSock.settimeout(0.4)
     def flushListen(self):
         while True:
             try:
                 PacketBytes = self.udpCliSock.recv(1024)
             except:
                 break;
+    def flushTcp(self):
+        while True:
+            try:
+                PacketBytes = self.tcpSock.recv(1024)
+            except:
+                break;
+    def tcpSend(self,message):
+        try:
+            self.tcpSock = socket(AF_INET, SOCK_STREAM)
+            self.tcpSock.settimeout(1)
+            self.tcpSock.connect((self.host,self.tcpPort))
+            data = '1~'+message
+            self.tcpSock.send(data)
+            ret = self.tcpSock.recv(self.bufsize)
+            return ret
+        except:
+            return 'receive time out'
     def send(self,message):
         data = '1~'+message
         for i in range(5):
@@ -95,7 +115,7 @@ class phoneApp(App):
             cmd = ' '.join([self.dd_hao.text,self.dd_start.text,self.dd_chapter.text,self.dd_aimEnergy.text,self.dd_rush.text])
             # print 'real'
             # print cmd
-            ret = self.client.send('sendCmd:'+cmd)
+            ret = self.client.tcpSend('sendCmd:'+cmd)
             self.l_log.text = ret
 
         if self.needConfirm:
@@ -110,8 +130,9 @@ class phoneApp(App):
     def sendLog(self,instance):
         def runUp():
             self.l_log.text = 'Command is under execution!'
-            ret = self.client.send('readLog')
+            ret = self.client.tcpSend('readLog')
             self.l_log.text = ret
+
         self.needConfirm = True
         t = Thread(target = runUp)
         t.start()
