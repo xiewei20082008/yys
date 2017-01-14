@@ -34,15 +34,19 @@ class Yuhun:
                 sleep(.500)
         intX,intY = FindPic(dm,570,395,611,420,u"C:/anjianScript/通用经验/鬼王挑战.bmp","030303",0.9,0)
         if intX> 0 :
+            if self.afterGuiwang:
+
             for i in range(5):
-                x,y = FindPic(dm,570,395,611,420,u"C:/anjianScript/通用经验/亮点.bmp","030303",0.9,0)
+                x,y = FindPic(dm,164,182,231,362,u"C:/anjianScript/通用经验/蓝点.bmp","030303",0.9,0)
                 if x>0:
-                    fan.leftclick()
+                    fan.leftclick(x,y)
+                    sleep(.500)
+                    fan.leftclick(591,414)
                     sleep(.500)
                     break
                 else:
-                    start = ()
-                    end = ()
+                    start = (251,343)
+                    end = (251,200)
                     fan.leftdown(start[0],start[1])
                     sleep(.500)
                     # fan.leftdownmove(start[0],end[1])
@@ -52,12 +56,48 @@ class Yuhun:
                     dragMoveTo(fan,(start[0],end[1]),end)
                     sleep(.300)
                     fan.leftup(start[0],end[1])
+                sleep(.700)
             else:
                 self.afterGuiwang = True
+
+        intX,intY = FindPic(dm,475,392,713,587,u"C:/anjianScript/公会突破/详细.bmp","030303",0.9,0)
+        if intX>0:
+            fan.leftclick(42,34)
+            self.afterGuiwang = False
+            sleep(.500)
+
+        intX,intY = FindPic(dm,554,428,671,479,u"C:/anjianScript/通用经验/御魂start.bmp","030303",0.8,0)
+        if intX>0 and dm.cmpColor(626,368,'737573',0.9)!=0:
+            fan.leftclick(618,452)
+            sleep(.500)
+
+        intX,intY = FindPic(dm,574,440,649,458,u"C:/anjianScript/公会突破/灰开始战斗.bmp","030303",0.9,0)
+        if intX>0:
+            fan.leftclick(379,293)
+            sleep(0.500)
+            while True:
+                intX,intY = FindPic(dm,460,420,503,443,u"C:/anjianScript/公会突破/邀请.bmp","030303",0.9,0)
+                if intX,inY >0:
+                    sleep(.800)
+                    fan.leftclick(314,218)
+                    sleep(.500)
+                    fan.leftclick(489,218)
+                    sleep(.500)
+                    fan.leftclick(486,435)
+                    sleep(.500)
+                    break
+
+            sleep(3)
+
+        intX,intY = FindPic(dm,700,0,750,50,u"C:/anjianScript/通用经验/邮件.bmp","000000",0.8,0)
+        if intX>0:
+            fan.leftclick(249,541)
+            sleep(.500)
 
         intX,intY = FindPic(dm,670,455,705,490,u"C:/anjianScript/公会突破/地图.bmp","030303",0.9,0)
         if intX>0:
             fan.leftclick(intX,intY)
+            self.afterGuiwang = False
             sleep(.500)
 
         intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
@@ -146,6 +186,13 @@ class Yuhun:
             fan.leftclick(intX,intY)
             sleep(.500)
         return True
+
+    def runGuiwang(self):
+        while True:
+            ret = self.guiwangLoop(self.dm)
+            if ret == False:
+                break
+            sleep(1)
 
     def runApp(self):
         while True:
