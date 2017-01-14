@@ -13,7 +13,7 @@ class Client:
         self.bufsize = 1024
         self.tcpSock = None
         self.udpCliSock = socket(AF_INET, SOCK_DGRAM)
-        self.tcpAddr(self.host,self.tcpPort)
+        self.tcpAddr = (self.host,self.tcpPort)
         self.addr = (self.host,self.port)
         print 'socket ok'
     def sendHeartbeat(self):
