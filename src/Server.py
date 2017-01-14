@@ -75,20 +75,24 @@ class Server:
         while True:
             print 'waiting for message...'
             conn, addr = self.tcpSock.accept()
-            data = conn.recv(self.bufsize)
-            file = open('/root/log.txt','a')
-            message = data.split('~')
-            if len(message)>1:
-                if message[0]=='1':
-                    self.handlePhone(message[1],conn)
-                elif message[1] == 'heartbeat':
-                    print 'receive heartbeat'
-                    solveHeartbeat(message,conn)
-                else:
-                    print >>file,message[1]
-                    conn.send(message[0])
-                    # self.udpSerSock.sendto(message[0],addr)
-            file.close()
+            conn.settimeout(10)
+            try:
+                data = conn.recv(self.bufsize)
+                file = open('/root/log.txt','a')
+                message = data.split('~')
+                if len(message)>1:
+                    if message[0]=='1':
+                        self.handlePhone(message[1],conn)
+                    elif message[1] == 'heartbeat':
+                        print 'receive heartbeat'
+                        solveHeartbeat(message,conn)
+                    else:
+                        print >>file,message[1]
+                        conn.send(message[0])
+                        # self.udpSerSock.sendto(message[0],addr)
+                file.close()
+            except:
+                continue
             conn.close()
     def close(self):
         self.udpSerSock.close()
