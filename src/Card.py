@@ -3,8 +3,8 @@ from toolkit import *
 import msvcrt
 
 dm = reg()
-moveWindowAndBind(dm,'dahao')
-fan  = Fan(dm,'dahao')
+moveWindowAndBind(dm,'xiaohao')
+fan  = Fan(dm,'xiaohao')
 
 def moveToBottom():
     for i in range(10):
