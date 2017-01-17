@@ -271,6 +271,18 @@ class ChangeFood:
                 moveablePos.append(startPoints[index])
         print moveablePos
         return moveablePos
+
+def moveScreenFan(fan,start,end):
+    fan.leftdown(start[0],start[1])
+    sleep(.500)
+    # fan.leftdownmove(start[0],end[1])
+    # fan.leftdownmove(end[0],end[1])
+    # sleep(1.500)
+    dragMoveTo(fan,start,(start[0],end[1]))
+    dragMoveTo(fan,(start[0],end[1]),end)
+    sleep(.300)
+    fan.leftup(start[0],end[1])
+
 def isColorSimiliar(col1,col2,sim):
     def rgbSim(a,b,sim):
         return abs(a-b)<=sim
@@ -369,10 +381,14 @@ def setDict(dm):
     dm_ret = dm.SetDict(2, os.path.join(rootPath,u"dict/阴阳字库.txt"))
     dm.useDict(1)
 
-def FindPic(dm,x1,y1,x2,y2,picName, delta_color,sim, dir1):
+def FindPic(dm,x1,y1,x2,y2,picName, delta_color,sim, dir1,needConfirm = False):
     s = dm.FindPicE(x1, y1, x2, y2, picName, delta_color,sim, dir1)
     ss = s.split('|')
     # print ss[1],ss[2]
+    if needConfirm and int(ss[1])>0:
+        sleep(3)
+        s = dm.FindPicE(x1, y1, x2, y2, picName, delta_color,sim, dir1)
+        ss = s.split('|')
 
     return int(ss[1]),int(ss[2])
 

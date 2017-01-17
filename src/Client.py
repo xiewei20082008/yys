@@ -51,7 +51,7 @@ class Client:
             print 'try send'
             try:
                 self.tcpSock = socket(AF_INET, SOCK_STREAM)
-                self.tcpSock.settimeout(1)
+                self.tcpSock.settimeout(2)
                 self.tcpSock.connect(self.tcpAddr)
                 self.tcpSock.send(timeData)
 

@@ -128,19 +128,9 @@ class Manager():
                 sleep(2.500)
 
             else:
-                dm.moveto(728,150)
-                sleep(.500)
-
-                dm.leftdown()
-                sleep(1.000)
-                for i in range(0,3):
-                    dm.mover( 0, 30)
-                    sleep(.200)
-
-                sleep(1.000)
-                dm.leftup()
-                sleep(.300)
-                dm.leftup()
+                start = (728,150)
+                end = (728,300)
+                moveScreenFan(fan,start,end)
                 sleep(1.500)
 
 
@@ -186,11 +176,26 @@ class Manager():
                 fan.leftclick(intX,intY)
                 sleep(.500)
 
-            intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0)
+            intX,intY = FindPic(dm,5,7,39,30,u"活动返回.bmp","030303",0.9,0)
+            if intX>0:
+                fan.leftclick(intX,intY)
+                sleep(.500)
+
+            intX,intY = FindPic(dm,600,140,700,250,u"活动叉.bmp","030303",0.9,0)
+            if intX>0:
+                fan.leftclick(intX,intY)
+                sleep(.500)
+
+            intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0,needConfirm = True)
             if intX>0:
                 sleep(5.0)
-                fan.leftclick(434,110)
-                sleep(7.0)
+                for i in range(6):
+                    start = (700,311)
+                    end = (200,311)
+                    moveScreenFan(fan,start,end)
+                    sleep(.800)
+                fan.leftclick(217,128)
+                sleep(1.500)
                 print 'enter game ok'
                 return True
 

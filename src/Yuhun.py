@@ -26,15 +26,15 @@ class Yuhun:
 
         intX,intY = FindPic(dm,740,540,765,564,u"C:/anjianScript/通用经验/寻找鬼王.bmp","030303",0.9,0)
         if intX> 0 :
-            if self.afterGuiwang or self.guiwangTime >6:
+            if self.afterGuiwang or self.guiwangTime >4:
                 self.guiwangTime = 0
                 fan.leftclick(42,34) # 退出鬼王页
-                sleep(.500)
+                sleep(2.500)
 
             else:
                 self.guiwangTime+=1
                 fan.leftclick(398,240)
-                sleep(.500)
+                sleep(2.500)
         intX,intY = FindPic(dm,570,395,611,420,u"C:/anjianScript/通用经验/鬼王挑战.bmp","030303",0.9,0)
         if intX> 0 :
             self.guiwangTime=0
@@ -70,11 +70,11 @@ class Yuhun:
             else:
                 self.afterGuiwang = True
 
-        intX,intY = FindPic(dm,475,392,713,587,u"C:/anjianScript/通用经验/详细.bmp","030303",0.9,0)
-        if intX>0:
-            fan.leftclick(42,34)
-            self.afterGuiwang = False
-            sleep(.500)
+        # intX,intY = FindPic(dm,475,392,713,587,u"C:/anjianScript/通用经验/详细.bmp","030303",0.9,0)
+        # if intX>0:
+        #     fan.leftclick(42,34)
+        #     self.afterGuiwang = False
+        #     sleep(.500)
 
         intX,intY = FindPic(dm,554,428,671,479,u"C:/anjianScript/通用经验/御魂start.bmp","030303",0.8,0)
         if intX>0 and dm.cmpColor(626,368,'737573',0.9)!=0:
@@ -112,6 +112,11 @@ class Yuhun:
         if intX>0:
             fan.leftclick(intX,intY)
             self.afterGuiwang = False
+            sleep(.500)
+
+        intX,intY = FindPic(dm,335,340,377,363,u"C:/anjianScript/通用经验/无响应等待.bmp","030303",0.9,0)
+        if intX>0:
+            fan.leftclick(intX,intY)
             sleep(.500)
 
         intX,intY = FindPic(dm,465,241,525,285,u"C:/anjianScript/通用经验/无碎片.bmp","030303",0.9,0)
@@ -160,6 +165,8 @@ class Yuhun:
             global inBattle
             inBattle = True
             ah = AutoHun10(dm,self.windowName)
+            fan.leftclick(724,500)
+            sleep(.500)
             fan.leftclick(724,500)
             sleep(.800)
             if not self.ishun10:
@@ -227,8 +234,8 @@ moveWindowAndBind(dm1,'dahao')
 moveWindowAndBind(dm2,'xiaohao')
 
 times = 0
-ishun10 = True
-guiwang = False
+ishun10 = False
+guiwang = True
 
 yuhun1 = Yuhun(dm1,'dahao',times = times,ishun10 = ishun10)
 yuhun2 = Yuhun(dm2,'xiaohao',times = times,ishun10 = ishun10)
