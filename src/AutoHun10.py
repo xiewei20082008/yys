@@ -94,6 +94,44 @@ class AutoHun10:
         while True:
             self.mainLoop()
             sleep(.500)
+    def runYeyuanhuo(self):
+        dm = self.dm
+        fan = self.fan
+        while True:
+            self.mainLoop()
+            intX,intY = FindPic(dm,17,553,55,572,u"C:/anjianScript/通用经验/手动.bmp","000000",0.8,0)
+            if intX> 0 :
+                fan.leftclick(intX,intY)
+                sleep(1.0)
+            intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
+            if intX>0:
+                fan.leftclick(724,500)
+                sleep(.500)
+                fan.leftclick(724,500)
+                sleep(.800)
+            intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
+            if intX>0
+                fan.leftclick(307, 121)
+                sleep(.500)
+
+            intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
+            if intX > 0:
+                fan.leftclick(307, 121)
+                sleep(.500)
+            intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
+            if intX > 0:
+                dm.Capture(0,0,800,600,"c:/bonus/"+self.windowName+str(time.time())+".bmp")
+                sendToServer(str(datetime.datetime.now())[11:18]+' yuyuanhuo ')
+                fan.leftclick(307, 121)
+                sleep(.500)
+            intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/失败鼓.bmp","000000",0.8,0)
+            if intX>0:
+                fan.leftclick(intX,intY)
+                sleep(.500)
+            intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/业原火挑战.bmp","030303",0.9,0)
+            if intX>0:
+                fan.leftclick(intX,intY)
+                sleep(.500)
 
 import msvcrt
 import threading
