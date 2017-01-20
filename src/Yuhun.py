@@ -33,20 +33,20 @@ class Yuhun:
                 sleep(.500)
                 return
 
-            for i in range(5):
-                x,y = FindPic(dm,164,182,231,362,u"C:/anjianScript/通用经验/蓝点.bmp","030303",0.9,0)
+            for i in range(4):
+                x,y = FindPic(dm,151,180,201,361,u"C:/anjianScript/通用经验/蓝点.bmp","050505",0.9,0)
                 if x>0:
                     sleep(.500)
                     fan.leftclick(x,y)
-                    sleep(1.00)
+                    sleep(0.50)
                     fan.leftclick(x,y)
                     sleep(0.50)
                     fan.leftclick(591,414)
                     sleep(.500)
                     break
                 else:
-                    start = (251,343)
-                    end = (251,200)
+                    start = (251,200)
+                    end = (251,343)
                     fan.leftdown(start[0],start[1])
                     sleep(.500)
                     # fan.leftdownmove(start[0],end[1])
@@ -88,7 +88,7 @@ class Yuhun:
                     sleep(.500)
                     break
 
-            sleep(4)
+            sleep(2)
 
         # intX,intY = FindPic(dm,700,0,750,50,u"C:/anjianScript/通用经验/邮件.bmp","000000",0.8,0)
         # if intX>0:
@@ -109,15 +109,17 @@ class Yuhun:
             fan.leftclick(intX,intY)
             sleep(.500)
 
-        intX,intY = FindPic(dm,180,555,206,581,u"C:/anjianScript/通用经验/式神碎片.bmp","030303",0.9,0)
-        if intX>0:
-            fan.leftclick(intX,intY)
-            sleep(.500)
-
         intX,intY = FindPic(dm,465,241,525,285,u"C:/anjianScript/通用经验/无碎片.bmp","030303",0.9,0)
         if intX>0:
             fan.leftclick(655,176)
+            sleep(2.000)
+
+        intX,intY = FindPic(dm,180,555,206,581,u"C:/anjianScript/通用经验/式神碎片.bmp","030303",0.9,0)
+        if intX>0:
+            self.afterGuiwang = False
+            fan.leftclick(intX,intY)
             sleep(.500)
+
 
         intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
         if intX>0:
@@ -171,8 +173,8 @@ class Yuhun:
                     sleep(.500)
                     break
                 else:
-                    start = (251,343)
-                    end = (251,200)
+                    start = (251,250)
+                    end = (251,343)
                     fan.leftdown(start[0],start[1])
                     sleep(.500)
                     # fan.leftdownmove(start[0],end[1])
@@ -367,11 +369,13 @@ if guiwang:
 
 t1.start()
 t2.start()
+
+import msvcrt
 while True:
     print 'waiting for command'
     a = msvcrt.getch()
     print a
     if a=='s':
         print 's down'
-        yunhun1.gameOver = True
-        yunhun2.gameOver = True
+        yuhun1.gameOver = True
+        yuhun2.gameOver = True

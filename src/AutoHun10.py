@@ -90,19 +90,26 @@ class AutoHun10:
             sleep(.500)
             return 0
         return 1
+    def runApp(self):
+        while True:
+            self.mainLoop()
+            sleep(.500)
 
+import msvcrt
+import threading
 
 if __name__ == '__main__':
     dm = reg()
-    moveWindowAndBind(dm,'dahao')
-    ah = AutoHun10(dm,'dahao')
-    # moveWindowAndBind(dm,'xiaohao')
-    # ah = AutoHun10(dm,'xiaohao')
+    account = 'dahao'
+    # moveWindowAndBind(dm,'dahao')
+    # ah = AutoHun10(dm,'dahao')
+    moveWindowAndBind(dm,account)
+    ah = AutoHun10(dm,account)
+    t = threading.Thread(target = ah.runApp)
+    t.start()
     while True:
-        ret = ah.mainLoop()
-        sleep(.200)
-        a = dm.getkeystate(83)
-        if a==1:
+        ret = msvcrt.getch()
+        if ret == 's':
             print 's down'
             break
     dm.UnBindWindow()
