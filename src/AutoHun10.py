@@ -79,8 +79,14 @@ class AutoHun10:
             sleep(1)
 
 
-        intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
+        intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.7, 0)
         if intX > 0 and intY > 0:
+            print 'exit hun10'
+            return 0
+
+        intX,intY = FindPic(dm,282,189,490,409,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.7, 0)
+        if intX > 0 and intY > 0:
+            print 'exit hun10'
             return 0
 
         intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/失败鼓.bmp","000000",0.8,0)
