@@ -5,6 +5,7 @@ import os
 import datetime
 import pythoncom
 import Client
+import time
 import threading
 from ctypes import *
 import win32con
@@ -58,7 +59,8 @@ class ChangeFood:
         dm.SetExactOcr(1)
 
         ret = FindMultiPic(dm,62,129,674,402,(u"C:/anjianScript/通用经验/满.bmp|"
-            u"C:/anjianScript/通用经验/满1.bmp"),"080808",1,0)
+            u"C:/anjianScript/通用经验/满1.bmp|C:/anjianScript/通用经验/满2.bmp|C:/anjianScript/通用经验/满3.bmp"),"080808",1,0)
+        ret = list(set(ret))
         # ret = dm.FindStrExS(19,93,760,440,u"满",("f4c31b-303030|e3a943-303030|997a29-202020"),0.5)
         # print ret
         print ret
@@ -246,15 +248,15 @@ class ChangeFood:
 
             x = t+self.battleOffset[0]
             y = self.startPointY+self.battleOffset[1]
+
             intX,intY = FindPic(dm,x,y,x+self.battleSize[0],y+self.battleSize[1],
-                u"C:/anjianScript/通用经验/战.bmp|C:/anjianScript/通用经验/观.bmp","0a0a0a",1,0)
+                u"C:/anjianScript/通用经验/战.bmp|C:/anjianScript/通用经验/观.bmp|C:/anjianScript/通用经验/素材.bmp","0a0a0a",1,0)
             if intX >0:
                 # print 'find zhan'
                 return False
             else:
                 # print 'no find zhan'
                 return True
-
         startPoints = self.findStartPoints1()
         print startPoints
         moveableFoods = map(isMoveable,startPoints)
@@ -430,6 +432,13 @@ def send1(dm,message):
 
     dm.moveto(510, 564)
     dm.leftClick()
+
+
+picValue = {u"鼓下":[680,546,772,596,'030303',0.8]}
+def FindPicLite(dm,picName):
+    map1 = picValue[picName]
+    return FindPic(dm,map1[0],map1[1],map1[2],map1[3],u"C:/anjianScript/通用经验/"+picName+".bmp",map1[4],map1[5],0)
+
 def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "none",isChangeFood = False):
     fan = Fan(dm,windowName)
     returnV = 1
@@ -454,7 +463,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
         intX,intY = FindPic(dm,17,553,55,572,u"C:/anjianScript/通用经验/手动.bmp","000000",0.8,0)
         if intX>0:
             sleep(.100)
-            zhaoyuX,zhaoyuY = FindPic(dm,669,553,702,579,u"C:/anjianScript/通用经验/招鱼.bmp","000000",1,0)
+            zhaoyuX,zhaoyuY = FindPic(dm,670,555,696,570,u"C:/anjianScript/通用经验/招鱼.bmp","080808",1,0)
             if zhaoyuX>0:
                 fan.leftclick(zhaoyuX,zhaoyuY)
                 sleep(.700)
@@ -479,7 +488,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
 
 
 
-    intX,intY = FindPic(dm,680,546,772,596,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
+    intX,intY = FindPicLite(dm,u'鼓下')
     if intX>0:
         if isChangeFood:
             cf = ChangeFood(dm,windowName)

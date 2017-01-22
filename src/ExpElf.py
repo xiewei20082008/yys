@@ -114,7 +114,7 @@ class ExpElf:
         if intX > 0 and intY > 0:
             print 'find tansuo'
 
-            hardX,hardY = FindPic(dm,280,208,317,221,u"C:/anjianScript/通用经验/hard.bmp","000000",0.7,0)
+            hardX,hardY = FindPic(dm,280,200,311,219,u"C:/anjianScript/通用经验/hard.bmp","080808",0.9,0)
             if hardX > 0:
                 print 'find hard'
                 fan.leftclick(hardX, hardY)
