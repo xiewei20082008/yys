@@ -1,5 +1,7 @@
 #coding=utf8
 from toolkit import *
+import time
+import datetime
 class AutoHun10:
     def __init__(self,dm,windowName):
         self.dm = dm
@@ -16,7 +18,7 @@ class AutoHun10:
             fan.leftclick(intX,intY)
             sleep(1)
 
-        intX,intY = FindPic(dm,659,534,718,598,u"C:/anjianScript/通用经验/兔子跳.bmp|C:/anjianScript/通用经验/兔子跳1.bmp","030303",1,0)
+        intX,intY = FindPic(dm,659,534,718,598,u"C:/anjianScript/通用经验/兔子跳.bmp|C:/anjianScript/通用经验/兔子跳1.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
             fan.leftclick(685,569)
             sleep(.230)
@@ -40,14 +42,14 @@ class AutoHun10:
                 fan.leftclick(35,564)
                 sleep(.500)
             return 1
-        intX,intY = FindPic(dm,719,529,798,604,u"C:/anjianScript/通用经验/打火机回合.bmp|C:/anjianScript/通用经验/打火机回合1.bmp","030303",1,0)
+        intX,intY = FindPic(dm,719,529,798,604,u"C:/anjianScript/通用经验/打火机回合.bmp|C:/anjianScript/通用经验/打火机回合1.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
             fan.leftclick(749,554)
             sleep(.150)
             fan.leftclick(718,424)
             sleep(.150)
             return 1
-        intX,intY = FindPic(dm,720,534,795,596,u"C:/anjianScript/通用经验/食发鬼回合.bmp|C:/anjianScript/通用经验/食发鬼回合1.bmp","030303",1,0)
+        intX,intY = FindPic(dm,720,534,795,596,u"C:/anjianScript/通用经验/食发鬼回合.bmp|C:/anjianScript/通用经验/食发鬼回合1.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
             clickPos = {0:(389,148),1:(174,164),2:(591,167)}
             fan.leftclick(749,552)
@@ -56,14 +58,14 @@ class AutoHun10:
             self.shifaguiTry = (self.shifaguiTry+1)%3
             sleep(.600)
             return 1
-        intX,intY = FindPic(dm,720,534,795,596,u"C:/anjianScript/通用经验/食发鬼断火.bmp","030303",1,0)
+        intX,intY = FindPic(dm,720,534,795,596,u"C:/anjianScript/通用经验/食发鬼断火.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
             fan.leftclick(35,564)
             sleep(.250)
             fan.leftclick(35,564)
             sleep(.500)
             return 1
-        intX,intY = FindPic(dm,677,554,698,575,u"C:/anjianScript/通用经验/兔子断火.bmp","030303",1,0)
+        intX,intY = FindPic(dm,677,554,698,575,u"C:/anjianScript/通用经验/兔子断火.bmp","030303",0.8,0)
         if intX > 0 and intY > 0:
             fan.leftclick(35,564)
             sleep(.250)
@@ -99,10 +101,6 @@ class AutoHun10:
         fan = self.fan
         while True:
             self.mainLoop()
-            intX,intY = FindPic(dm,17,553,55,572,u"C:/anjianScript/通用经验/手动.bmp","000000",0.8,0)
-            if intX> 0 :
-                fan.leftclick(intX,intY)
-                sleep(1.0)
             intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
             if intX>0:
                 fan.leftclick(724,500)
@@ -110,7 +108,7 @@ class AutoHun10:
                 fan.leftclick(724,500)
                 sleep(.800)
             intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
-            if intX>0
+            if intX>0:
                 fan.leftclick(307, 121)
                 sleep(.500)
 
@@ -128,22 +126,24 @@ class AutoHun10:
             if intX>0:
                 fan.leftclick(intX,intY)
                 sleep(.500)
-            intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/业原火挑战.bmp","030303",0.9,0)
+            intX,intY = FindPic(dm,553,355,630,420,u"C:/anjianScript/通用经验/业原火挑战.bmp","030303",0.9,0)
             if intX>0:
+                print 'found tianzhan'
                 fan.leftclick(intX,intY)
                 sleep(.500)
+            sleep(.500)
 
 import msvcrt
 import threading
 
 if __name__ == '__main__':
     dm = reg()
-    account = 'dahao'
+    account = 'xiaohao'
     # moveWindowAndBind(dm,'dahao')
     # ah = AutoHun10(dm,'dahao')
     moveWindowAndBind(dm,account)
     ah = AutoHun10(dm,account)
-    t = threading.Thread(target = ah.runApp)
+    t = threading.Thread(target = ah.runYeyuanhuo)
     t.start()
     while True:
         ret = msvcrt.getch()

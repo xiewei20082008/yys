@@ -488,12 +488,12 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             fan.leftclick(724,500)
             sleep(.500)
 
-    intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/失败鼓.bmp","000000",0.8,0)
+    intX,intY = FindPic(dm,256,85,326,139,u"C:/anjianScript/阴阳师碎片/失败鼓.bmp","000000",0.7,0)
     if intX>0:
         fan.leftclick(intX,intY)
         sleep(.500)
 
-    intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
+    intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.7, 0)
     if intX > 0 and intY > 0:
 
         if isRecordLevel:
@@ -504,17 +504,17 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
             fan.leftclick(307, 121)
             sleep(.500)
 
-    intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
+    intX,intY = FindPic(dm,282,189,490,409,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.7, 0)
     if intX > 0 and intY > 0:
         if cf is not None:
             cf.needRecord = True
         fan.leftclick(307, 121)
         sleep(.500)
-    intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
+    intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.7, 0)
     if intX > 0 and intY > 0:
         fan.leftclick(307, 121)
         sleep(.500)
-    intX,intY = FindPic(dm,290, 332,356, 356,u"C:/anjianScript/阴阳师碎片/我很忙.bmp","000000", 0.9, 0)
+    intX,intY = FindPic(dm,290, 332,356, 356,u"C:/anjianScript/阴阳师碎片/我很忙.bmp","000000", 0.7, 0)
     if intX > 0 and intY > 0:
         fan.leftclick(intX, intY)
         sleep(.500)

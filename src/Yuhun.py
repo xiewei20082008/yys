@@ -75,20 +75,25 @@ class Yuhun:
         if intX>0:
             fan.leftclick(379,293)
             sleep(0.500)
-            while True:
-                intX,intY = FindPic(dm,460,420,503,443,u"C:/anjianScript/通用经验/邀请.bmp","030303",0.9,0)
-                global inBattle
-                if intX >0 and not inBattle:
-                    sleep(.800)
-                    fan.leftclick(314,218)
-                    sleep(.500)
-                    fan.leftclick(489,218)
-                    sleep(.500)
-                    fan.leftclick(486,435)
-                    sleep(.500)
-                    break
 
+        intX,intY = FindPic(dm,460,420,503,443,u"C:/anjianScript/通用经验/邀请.bmp","030303",0.9,0)
+        global inBattle
+        if intX >0 and not inBattle:
+            sleep(.800)
+            fan.leftclick(314,218)
+            sleep(.500)
+            fan.leftclick(489,218)
+            sleep(.500)
+            fan.leftclick(486,435)
+            sleep(.500)
+        elif intX>0:
             sleep(2)
+
+        intX,intY = FindPic(dm,355,100,434,123,u"C:/anjianScript/通用经验/协战队伍卡住.bmp","030303",0.9,0)
+        if intX>0:
+            fan.leftclick(intX,intY)
+            sleep(0.500)
+
 
         # intX,intY = FindPic(dm,700,0,750,50,u"C:/anjianScript/通用经验/邮件.bmp","000000",0.8,0)
         # if intX>0:
@@ -297,7 +302,7 @@ class Yuhun:
                 sleep(.500)
 
             sleep(.500)
-        intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.9, 0)
+        intX,intY = FindPic(dm,227,46,385,190,u"C:/anjianScript/阴阳师碎片/胜利鼓.bmp","000000", 0.7, 0)
         if intX > 0 and intY > 0:
             self.nowTimes+= self.add
             self.add = 0
@@ -305,12 +310,12 @@ class Yuhun:
                 return False
             fan.leftclick(307, 121)
             sleep(.500)
-        intX,intY = FindPic(dm,290, 191,496, 395,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.9, 0)
+        intX,intY = FindPic(dm,282,189,490,409,u"C:/anjianScript/阴阳师碎片/胜利佛1.bmp","000000", 0.7, 0)
         if intX > 0 and intY > 0:
             self.add = 1
             fan.leftclick(307, 121)
             sleep(.500)
-        intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.9, 0)
+        intX,intY = FindPic(dm,350, 390,434, 449,u"C:/anjianScript/阴阳师碎片/胜利碗.bmp","000000", 0.7, 0)
         if intX > 0 and intY > 0:
             global inBattle
             inBattle = False
@@ -352,8 +357,8 @@ moveWindowAndBind(dm1,'dahao')
 moveWindowAndBind(dm2,'xiaohao')
 
 times = 0
-ishun10 = False
-guiwang = True
+ishun10 = True
+guiwang = False
 
 yuhun1 = Yuhun(dm1,'dahao',times = times,ishun10 = ishun10)
 yuhun2 = Yuhun(dm2,'xiaohao',times = times,ishun10 = ishun10)
@@ -362,8 +367,8 @@ t2 = threading.Thread(target = yuhun2.runApp)
 
 if guiwang:
     dm3 = reg()
-    moveWindowAndBind(dm3,'jiangshi')
-    yunhun3 = Yuhun(dm3,'jiangshi',times = times,ishun10 = ishun10)
+    moveWindowAndBind(dm3,'cimubaba')
+    yunhun3 = Yuhun(dm3,'cimubaba',times = times,ishun10 = ishun10)
     t3 = threading.Thread(target = yunhun3.runGuiwang)
     t3.start()
 

@@ -186,8 +186,9 @@ class Manager():
                 fan.leftclick(intX,intY)
                 sleep(.500)
 
-            intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","000000",0.8,0,needConfirm = True)
+            intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","030303",0.8,0,needConfirm = True)
             if intX>0:
+                print 'find mail'
                 sleep(5.0)
                 for i in range(6):
                     start = (700,311)
