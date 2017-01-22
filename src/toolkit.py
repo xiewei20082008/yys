@@ -479,7 +479,7 @@ def autoBattle(dm,cf = None,shenLe = False,isRecordLevel = False,windowName = "n
 
 
 
-    intX,intY = FindPic(dm,682,556,777,587,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
+    intX,intY = FindPic(dm,680,546,772,596,u"C:/anjianScript/公会突破/鼓下.bmp","000000",0.8,0)
     if intX>0:
         if isChangeFood:
             cf = ChangeFood(dm,windowName)

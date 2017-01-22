@@ -33,7 +33,7 @@ class ChangeFood:
         _method_change = None
         sleep(5)
         while True:
-            intX,intY = FindPic(dm,13,490,38,522,u"C:/anjianScript/通用经验/战斗灯笼.bmp","030303",0.9,0)
+            intX,intY = FindPic(dm,13,490,38,522,u"C:/anjianScript/通用经验/战斗灯笼.bmp","030303",0.8,0)
             if intX >0:
                 print 'find denlonog'
                 ret = self.recogFull()
@@ -54,7 +54,7 @@ class ChangeFood:
                     _method_change = self.changeBattleSide
                     sleep(3.0)
 
-            intX,intY = FindPic(dm,23,474,59,514,u"C:/anjianScript/通用经验/换狗粮N.bmp","030303",0.9,0)
+            intX,intY = FindPic(dm,23,474,59,514,u"C:/anjianScript/通用经验/换狗粮N.bmp","030303",0.8,0)
             if intX>0:
                 print 'n correct start change one side'
                 if _method_change:
@@ -66,7 +66,7 @@ class ChangeFood:
                 fan.leftclick(24,27)
                 sleep(3.000)
             intX,intY = FindPic(dm,16,474,65,514,(u"C:/anjianScript/通用经验/换狗粮R.bmp|"
-                u"C:/anjianScript/通用经验/换狗狼全部.bmp"),"030303",0.9,0)
+                u"C:/anjianScript/通用经验/换狗狼全部.bmp"),"030303",0.8,0)
             if intX>0:
                 fan.leftclick(41,491)
                 sleep(1)
