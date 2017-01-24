@@ -5,7 +5,7 @@ class YaoQiFengYin:
     def __init__(self):
         self.dm = reg()
         # moveWindowAndBind(self.dm,'dahao')
-        ret = self.dm.BindWindow(983702, "normal", "normal", "normal", 0)
+        ret = self.dm.BindWindow(341546,"normal", "normal", "normal", 0)
         print ret
     def find(self):
         dm = self.dm

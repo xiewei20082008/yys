@@ -144,7 +144,7 @@ import threading
 
 if __name__ == '__main__':
     dm = reg()
-    account = 'xiaohao'
+    account = 'dahao'
     # moveWindowAndBind(dm,'dahao')
     # ah = AutoHun10(dm,'dahao')
     moveWindowAndBind(dm,account)
