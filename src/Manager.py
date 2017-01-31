@@ -19,9 +19,9 @@ class Manager():
         self.hwnd = 0
     def bindWindow(self):
         dm = self.dm_manager
-        hwnd = dm.FindWindow("",u"天天模拟器管理")
+        hwnd = dm.FindWindow("",u"靠谱天天模拟器多开管理")
         self.hwnd = hwnd
-        print hwnd
+        print 'hwnd is: '+str(hwnd)
         ret = dm.BindWindow(hwnd, "normal", "normal", "normal", 0)
         if ret!=1:
             print 'bind error'
@@ -58,9 +58,9 @@ class Manager():
     #     self.restart(329,88)
     def restart(self,windowName):
         if windowName == "dahao":
-            self.restart1(329,186)
+            self.restart1(318,145)
         elif windowName == "xiaohao":
-            self.restart1(329,88)
+            self.restart1(318,93)
     # def restartJiangshi(self):
     #     self.restart(329,136)
     def showAhead(self):
@@ -160,7 +160,11 @@ class Manager():
             if intX>0:
                 print 'find icon'
                 fan.leftclick(intX,intY)
-                sleep(15.0)
+                sleep(20.0)
+                fan.leftclick(428,264)
+                sleep(.500)
+                fan.leftclick(428,264)
+                sleep(.500)
                 fan.leftclick(428,264)
                 sleep(.500)
 
@@ -186,11 +190,11 @@ class Manager():
                 fan.leftclick(intX,intY)
                 sleep(.500)
 
-            intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","030303",0.8,0,needConfirm = True)
+            intX,intY = FindPic(dm,700,0,750,50,u"邮件.bmp","030303",0.9,0,needConfirm = True)
             if intX>0:
                 print 'find mail'
                 sleep(5.0)
-                for i in range(6):
+                for i in range(4):
                     start = (700,311)
                     end = (200,311)
                     moveScreenFan(fan,start,end)
@@ -309,7 +313,7 @@ class Deamon:
                 return True
             elif state=="1":
                 if isScriptNeedRestart():
-                    # 运行到初始状态
+                    # 运行到初始状/态
                     ret = self.startWindow(windowName,int(chapter))
                     if ret:
                         print u'窗口启动成功'

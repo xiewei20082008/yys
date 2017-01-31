@@ -237,8 +237,8 @@ moveWindowAndBind(dm1,'dahao')
 moveWindowAndBind(dm2,'xiaohao')
 
 times = 0
-ishun10 = False
-guiwang = True
+ishun10 = True
+guiwang = False
 
 yuhun1 = Yuhun(dm1,'dahao',times = times,ishun10 = ishun10)
 yuhun2 = Yuhun(dm2,'xiaohao',times = times,ishun10 = ishun10)

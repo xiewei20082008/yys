@@ -26,7 +26,7 @@ class Fan:
     def leftclick(self,x,y):
         lParam = y <<16 | x
         win32api.SendMessage(self.pyhwnd, win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, lParam);
-        sleep(.100)
+        sleep(.400)
         win32api.SendMessage(self.pyhwnd,win32con.WM_LBUTTONUP, 0,lParam);
     def leftdownmove(self,x,y):
         lParam = y <<16 | x
@@ -59,7 +59,7 @@ class ChangeFood:
         dm.SetExactOcr(1)
 
         ret = FindMultiPic(dm,62,129,674,402,(u"C:/anjianScript/通用经验/满.bmp|"
-            u"C:/anjianScript/通用经验/满1.bmp|C:/anjianScript/通用经验/满2.bmp|C:/anjianScript/通用经验/满3.bmp"),"080808",1,0)
+            u"C:/anjianScript/通用经验/满1.bmp|C:/anjianScript/通用经验/满2.bmp|C:/anjianScript/通用经验/满3.bmp|C:/anjianScript/通用经验/满4.bmp"),"080808",1,0)
         ret = list(set(ret))
         # ret = dm.FindStrExS(19,93,760,440,u"满",("f4c31b-303030|e3a943-303030|997a29-202020"),0.5)
         # print ret
@@ -198,18 +198,20 @@ class ChangeFood:
         dm = self.dm
         fan = self.fan
 
-        for i in range(3):
+        for i in range(2):
             start = (575,536)
-            end = (300,536)
+            end = (50,536)
             dm.moveto(start[0],start[1])
+            sleep(.500)
             fan.leftdown(start[0],start[1])
             # dm.leftdown()
             sleep(.500)
             dragMoveTo(fan,start,end)
+            sleep(.500)
             fan.leftup(end[0],end[1])
             # dm.leftup()
             sleep(.500)
-
+        sleep(2)
         print 'changePageend'
 
     def changeBattleSide(self):
@@ -238,7 +240,7 @@ class ChangeFood:
             return dm.GetAveRGB(t,self.startPointY,t+levelRect[0],self.startPointY+levelRect[1])
         def isMoveable(t):
             ret = dm.GetAveRGB(t,self.startPointY,t+levelRect[0],self.startPointY+levelRect[1])
-            # print ret
+            print '!aveRGB:'+str(ret)
             if int(ret[4:],16) > 0x30:
                 pass
                 # print 'no full'
@@ -349,7 +351,7 @@ def reg():
     dm = win32com.client.Dispatch('dm.dmsoft')
     print dm.ver()
 
-    hMod = windll.kernel32.GetModuleHandleA('dm1.dll')
+    hMod = windll.kernel32.GetModuleHandleA('dm.dll')
     memarray = (c_char*1).from_address(hMod+0x1063D0)
     print memarray[0]
     memarray[0] ='1'
@@ -390,7 +392,7 @@ def FindPic(dm,x1,y1,x2,y2,picName, delta_color,sim, dir1,needConfirm = False):
     ss = s.split('|')
     # print ss[1],ss[2]
     if needConfirm and int(ss[1])>0:
-        sleep(3)
+        sleep(9)
         s = dm.FindPicE(x1, y1, x2, y2, picName, delta_color,sim, dir1)
         ss = s.split('|')
 
